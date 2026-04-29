@@ -1,0 +1,3538 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор договора | TEXNIKA ADVANS SERVIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a3260;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #f8f5ef;
+  --cream-dark: #ede8df;
+  --text: #1e1e2e;
+  --text-muted: #6b6b80;
+  --white: #ffffff;
+  --border: #d4cec4;
+  --success: #2d7a4f;
+  --error: #c0392b;
+  --section-bg: #ffffff;
+  --input-bg: #fdfcfa;
+  --shadow: 0 2px 20px rgba(15,31,61,0.10);
+  --radius: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.header {
+  background: var(--navy);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.22);
+}
+.header-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.logo-text h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+.logo-text p {
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.lang-switch {
+  display: flex;
+  gap: 6px;
+}
+.lang-btn {
+  background: transparent;
+  border: 1.5px solid rgba(201,168,76,0.45);
+  color: var(--gold-light);
+  padding: 5px 13px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.lang-btn.active, .lang-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────── */
+.main {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ─── PROGRESS ───────────────────────────────────────── */
+.progress-bar {
+  grid-column: 1 / -1;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  min-width: 100px;
+}
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.step-circle.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.step-circle.done {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+.step-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.step-label.active { color: var(--navy); font-weight: 600; }
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 8px;
+  min-width: 16px;
+}
+
+/* ─── FORM AREA ──────────────────────────────────────── */
+.form-area { display: flex; flex-direction: column; gap: 20px; }
+
+.section-card {
+  background: var(--section-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: none;
+}
+.section-card.active { display: block; }
+
+.section-header {
+  background: var(--navy);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-num {
+  width: 28px;
+  height: 28px;
+  background: var(--gold);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+}
+.section-body { padding: 24px; }
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.field-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.field-grid.full { grid-template-columns: 1fr; }
+
+.field-group { display: flex; flex-direction: column; gap: 5px; }
+.field-group.span2 { grid-column: span 2; }
+.field-group.span3 { grid-column: span 3; }
+
+label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+label .req { color: var(--gold); margin-left: 2px; }
+
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 13.5px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text);
+  background: var(--input-bg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(15,31,61,0.08);
+}
+input.error { border-color: var(--error); }
+textarea { resize: vertical; min-height: 72px; }
+select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b80' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+/* ─── SUPPLIER BOX ───────────────────────────────────── */
+.supplier-box {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: var(--radius);
+  padding: 20px;
+  color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.supplier-box h3 {
+  grid-column: 1/-1;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sup-field { display: flex; flex-direction: column; gap: 2px; }
+.sup-field span:first-child { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+.sup-field span:last-child { font-size: 13px; color: var(--white); font-weight: 500; }
+
+/* ─── SPEC TABLE ──────────────────────────────────────── */
+.spec-table-wrap { overflow-x: auto; margin-top: 4px; }
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  min-width: 720px;
+}
+.spec-table th {
+  background: var(--navy);
+  color: var(--gold-light);
+  padding: 9px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.spec-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.spec-table tr:last-child td { border-bottom: none; }
+.spec-table input, .spec-table select {
+  padding: 6px 8px;
+  font-size: 12.5px;
+}
+.spec-total {
+  background: var(--cream);
+  font-weight: 700;
+  border-top: 2px solid var(--navy) !important;
+}
+
+.btn-add-row {
+  margin-top: 10px;
+  background: transparent;
+  border: 1.5px dashed var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.btn-add-row:hover { border-color: var(--navy); color: var(--navy); background: var(--cream); }
+
+.btn-del-row {
+  background: none;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.btn-del-row:hover { background: #fff0ef; }
+
+/* ─── PAYMENT SCHEDULE ───────────────────────────────── */
+.payment-type-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.pay-type-btn {
+  border: 1.5px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.pay-type-btn.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.schedule-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.schedule-table th { background: var(--cream-dark); padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; border-bottom: 2px solid var(--border); }
+.schedule-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
+.schedule-table input { width: 100%; }
+
+/* ─── CONDITIONS ──────────────────────────────────────── */
+.condition-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.condition-card {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--input-bg);
+}
+.condition-card:hover { border-color: var(--navy); }
+.condition-card.selected {
+  border-color: var(--gold);
+  background: #fef9ee;
+}
+.condition-card input[type="radio"], .condition-card input[type="checkbox"] {
+  display: none;
+}
+.condition-card-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.condition-card-desc { font-size: 11.5px; color: var(--text-muted); }
+.selected .condition-card-title { color: var(--navy); }
+
+/* ─── SIDEBAR ─────────────────────────────────────────── */
+.sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; }
+
+.preview-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.preview-header {
+  background: linear-gradient(135deg, #0f1f3d, #1e3a6e);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.preview-header h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+  font-size: 15px;
+}
+.preview-body { padding: 16px 18px; }
+.preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--cream-dark);
+  gap: 8px;
+}
+.preview-row:last-child { border-bottom: none; }
+.preview-row .pk { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.preview-row .pv {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.total-amount {
+  background: linear-gradient(135deg, #0f1f3d, #1e3a6e);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  text-align: center;
+}
+.total-amount .label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; }
+.total-amount .amount { font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: var(--gold-light); font-weight: 600; margin-top: 3px; }
+.total-amount .currency { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+/* ─── BUTTONS ──────────────────────────────────────────── */
+.btn-row { display: flex; gap: 10px; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; }
+
+.btn {
+  padding: 11px 22px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'IBM Plex Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-primary { background: var(--navy); color: var(--white); }
+.btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(15,31,61,0.22); }
+.btn-secondary { background: var(--cream-dark); color: var(--text); border: 1.5px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+.btn-gold { background: var(--gold); color: var(--navy); }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,168,76,0.35); }
+.btn-download {
+  width: 100%;
+  justify-content: center;
+  padding: 13px;
+  font-size: 14px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy);
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  border-radius: 8px;
+  border: none;
+}
+.btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.45); }
+.btn-download:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ─── CHECKLIST ─────────────────────────────────────────── */
+.checklist { display: flex; flex-direction: column; gap: 6px; }
+.check-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.check-item.ok { color: var(--success); }
+.check-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+.check-item.ok .check-icon { background: var(--success); color: white; }
+
+/* ─── DIVIDER ───────────────────────────────────────────── */
+.divider { border: none; border-top: 1.5px solid var(--cream-dark); margin: 16px 0; }
+
+/* ─── INFO NOTE ──────────────────────────────────────────── */
+.info-note {
+  background: #eef3ff;
+  border-left: 3px solid #4a6fa5;
+  border-radius: 0 7px 7px 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #2d4a7a;
+  margin-top: 12px;
+}
+.warn-note {
+  background: #fff9e6;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 7px 7px 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #7a5c00;
+  margin-top: 12px;
+}
+
+/* ─── SUCCESS ──────────────────────────────────────────── */
+.success-panel {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px;
+  text-align: center;
+  display: none;
+}
+.success-panel.active { display: block; }
+.success-icon { font-size: 56px; margin-bottom: 16px; }
+.success-panel h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--navy); margin-bottom: 8px; }
+.success-panel p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+/* ─── TOOLTIP ────────────────────────────────────────────── */
+.field-hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width: 900px) {
+  .main { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .progress-bar { grid-column: 1; }
+  .field-grid.three { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 600px) {
+  .field-grid, .field-grid.three { grid-template-columns: 1fr; }
+  .field-group.span2, .field-group.span3 { grid-column: span 1; }
+  .condition-grid { grid-template-columns: 1fr; }
+}
+
+.highlight-field {
+  animation: highlightPulse 0.6s ease;
+}
+@keyframes highlightPulse {
+  0% { box-shadow: 0 0 0 0 rgba(201,168,76,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(201,168,76,0); }
+  100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+}
+
+/* ── CLIENT DATABASE ─────────────────────────── */
+.db-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,61,.72);z-index:500;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto}
+.db-overlay.open{display:flex}
+.db-modal{background:#fff;border-radius:14px;width:100%;max-width:900px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3);margin:auto}
+.db-modal-header{background:var(--navy);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.db-modal-header h2{font-family:'Playfair Display',serif;color:#fff;font-size:17px}
+.btn-close-db{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.btn-close-db:hover{background:rgba(255,255,255,.3)}
+.db-modal-body{padding:22px}
+.db-toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.db-search-inp{flex:1;min-width:180px;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'IBM Plex Sans',sans-serif;outline:none}
+.db-search-inp:focus{border-color:var(--navy)}
+.clients-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.clients-table th{background:var(--navy);color:var(--gold-light);padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.clients-table td{padding:8px 12px;border-bottom:1px solid var(--cream-dark);vertical-align:middle}
+.clients-table tr:hover td{background:var(--cream)}
+.td-org{font-weight:600;color:var(--navy);font-size:13px}
+.td-inn{font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+.deal-badge{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.cf-card{background:var(--cream);border-radius:8px;padding:16px;margin-top:12px;border:1.5px solid var(--border);display:none}
+.cf-card.open{display:block}
+.cf-card h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:14px;margin-bottom:12px}
+/* buyer tabs */
+.buyer-mode-label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:.06em;margin-bottom:10px;display:block}
+.buyer-tabs{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.buyer-tab-btn{flex:1;padding:10px 8px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;background:var(--cream-dark);color:var(--text-muted);border:none;font-family:'IBM Plex Sans',sans-serif;transition:all .2s;border-right:1px solid var(--border)}
+.buyer-tab-btn:last-child{border-right:none}
+.buyer-tab-btn.active{background:var(--navy);color:#fff}
+.buyer-tab-icon{font-size:18px;display:block;margin-bottom:2px}
+.buyer-panel{display:none}
+.buyer-panel.active{display:block}
+/* search dropdown */
+.client-srch-wrap{position:relative;margin-bottom:4px}
+.client-srch-input{width:100%;padding:9px 12px 9px 36px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;font-family:'IBM Plex Sans',sans-serif;background:var(--input-bg);outline:none;transition:border-color .2s}
+.client-srch-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,31,61,.08)}
+.srch-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text-muted);pointer-events:none}
+.client-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--border);border-radius:8px;box-shadow:0 8px 32px rgba(15,31,61,.14);z-index:60;max-height:260px;overflow-y:auto;display:none}
+.client-dropdown.open{display:block}
+.cd-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--cream-dark);transition:background .15s}
+.cd-item:last-child{border-bottom:none}
+.cd-item:hover{background:var(--cream)}
+.cd-name{font-weight:600;font-size:13px;color:var(--navy)}
+.cd-meta{font-size:11px;color:var(--text-muted);margin-top:1px;font-family:'IBM Plex Mono',monospace}
+.cd-deals{display:inline-block;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:middle}
+.cd-empty{padding:14px;text-align:center;color:var(--text-muted);font-size:13px}
+.selected-client{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:8px;padding:13px 15px;color:#fff;position:relative;margin-top:8px;display:none}
+.selected-client h4{font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:7px}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.sc-f span:first-child{font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;display:block}
+.sc-f span:last-child{font-size:12px;color:#fff}
+.btn-clear-sc{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+.btn-clear-sc:hover{background:rgba(255,255,255,.3)}
+.buyer-hint{background:#eef3ff;border-left:3px solid #4a6fa5;border-radius:0 7px 7px 0;padding:9px 13px;font-size:12px;color:#2d4a7a;margin-top:8px}
+/* warehouse / stock */
+.stock-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,61,.72);z-index:500;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto}
+.stock-overlay.open{display:flex}
+.stock-modal{background:#fff;border-radius:14px;width:100%;max-width:820px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3);margin:auto}
+.stock-modal-header{background:var(--navy);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.stock-modal-header h2{font-family:'Playfair Display',serif;color:#fff;font-size:17px}
+.btn-close-stock{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.btn-close-stock:hover{background:rgba(255,255,255,.3)}
+.stock-modal-body{padding:22px}
+.stock-upload-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;background:var(--cream);cursor:pointer;transition:border-color .2s}
+.stock-upload-zone:hover,.stock-upload-zone.drag-over{border-color:var(--navy);background:#f0f4ff}
+.stock-upload-icon{font-size:36px;margin-bottom:8px}
+.stock-upload-text{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.stock-upload-hint{font-size:12px;color:var(--text-muted)}
+.stock-table-wrap{overflow-x:auto;margin-top:14px;max-height:380px;overflow-y:auto}
+.stock-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.stock-table th{background:var(--navy);color:var(--gold-light);padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;position:sticky;top:0;z-index:2}
+.stock-table td{padding:8px 12px;border-bottom:1px solid var(--cream-dark);vertical-align:middle}
+.stock-table tr:hover td{background:var(--cream)}
+.stock-item-name{font-weight:600;color:var(--navy);font-size:13px}
+.stock-qty-badge{background:var(--success);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.stock-unit{font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace}
+.stock-toolbar{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.stock-search-inp{flex:1;min-width:180px;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'IBM Plex Sans',sans-serif;outline:none}
+.stock-search-inp:focus{border-color:var(--navy)}
+.prod-wrap{position:relative}
+/* Stock dropdown — only for in-stock items */
+.prod-dropdown{position:absolute;top:calc(100% + 2px);left:0;min-width:300px;max-width:420px;background:#fff;border:1.5px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(15,31,61,.14);z-index:80;max-height:240px;overflow-y:auto;display:none}
+.prod-dropdown.open{display:block}
+.prod-item{padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--cream-dark);transition:background .15s}
+.prod-item:last-child{border-bottom:none}
+.prod-item:hover{background:var(--cream)}
+.prod-item-name{font-weight:600;font-size:13px;color:var(--navy)}
+.prod-in-stock{display:inline-block;background:#d4edda;color:var(--success);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:5px}
+/* Ghost hint — history suggestion shown as faded overlay inside the input */
+.prod-ghost-wrap{position:relative;display:flex;align-items:center}
+.prod-ghost-wrap input{position:relative;z-index:1;background:transparent}
+.prod-ghost{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13.5px;color:#bbb;pointer-events:none;white-space:nowrap;overflow:hidden;z-index:0;font-family:'IBM Plex Sans',sans-serif;letter-spacing:0}
+.prod-ghost .ghost-typed{color:transparent}/* hides the already-typed part */
+.prod-ghost-hint{font-size:10px;color:var(--text-muted);margin-top:2px;font-style:italic;opacity:.75}
+
+
+/* ── AUTH SCREEN ─────────────────────────────── */
+#authScreen{display:flex;position:fixed;inset:0;background:linear-gradient(135deg,#0a1628 0%,#0f1f3d 50%,#1a3260 100%);z-index:9999;align-items:center;justify-content:center;flex-direction:column}
+.auth-card{background:#fff;border-radius:16px;padding:40px 44px;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.45)}
+.auth-logo{text-align:center;margin-bottom:28px}
+.auth-logo-icon{width:60px;height:60px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
+.auth-logo h1{font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);line-height:1.3}
+.auth-logo p{font-size:12px;color:var(--text-muted);margin-top:3px}
+.auth-field{margin-bottom:16px}
+.auth-field label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px}
+.auth-field input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color .2s}
+.auth-field input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,31,61,.08)}
+.auth-btn{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all .2s;margin-top:4px}
+.auth-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.auth-error{background:#fff0ef;color:var(--error);border-radius:7px;padding:9px 13px;font-size:13px;margin-top:12px;text-align:center;display:none}
+.auth-footer{text-align:center;font-size:11px;color:rgba(255,255,255,.4);margin-top:20px}
+/* current user badge */
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border-radius:6px;padding:5px 11px;border:1px solid rgba(201,168,76,.3)}
+.user-badge-name{color:var(--gold-light);font-size:12px;font-weight:600}
+.user-badge-role{color:rgba(255,255,255,.5);font-size:10px}
+.btn-logout{background:transparent;border:1.5px solid rgba(255,100,100,.4);color:#ff9999;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .2s}
+.btn-logout:hover{background:rgba(255,100,100,.15)}
+/* admin panel */
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,61,.75);z-index:600;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto}
+.admin-overlay.open{display:flex}
+.admin-modal{background:#fff;border-radius:14px;width:100%;max-width:920px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3);margin:auto}
+.admin-modal-header{background:linear-gradient(90deg,#0f1f3d,#8b1a1a);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.admin-modal-header h2{font-family:'Playfair Display',serif;color:#fff;font-size:17px}
+.admin-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:16px}
+.admin-tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'IBM Plex Sans',sans-serif;background:none;border-top:none;border-left:none;border-right:none;transition:all .2s}
+.admin-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.admin-panel{display:none}.admin-panel.active{display:block}
+.users-table{width:100%;border-collapse:collapse;font-size:13px}
+.users-table th{background:var(--navy);color:var(--gold-light);padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em}
+.users-table td{padding:9px 12px;border-bottom:1px solid var(--cream-dark);vertical-align:middle}
+.users-table tr:hover td{background:var(--cream)}
+.role-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.role-admin{background:#fde8e8;color:#c0392b}
+.role-manager{background:#e8f4fd;color:#2471a3}
+.log-table{width:100%;border-collapse:collapse;font-size:12px}
+.log-table th{background:var(--navy);color:var(--gold-light);padding:7px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.log-table td{padding:7px 12px;border-bottom:1px solid var(--cream-dark)}
+.log-action-contract{color:var(--success);font-weight:600}
+.log-action-login{color:#2471a3;font-weight:600}
+.log-action-logout{color:var(--text-muted)}
+.log-action-fail{color:var(--error);font-weight:600}
+
+
+/* ── DASHBOARD ─────────────────────────────────── */
+.dash-overlay{display:none;position:fixed;inset:0;background:#f0ede8;z-index:400;overflow-y:auto}
+.dash-overlay.open{display:block}
+.dash-topbar{background:var(--navy);padding:0;position:sticky;top:0;z-index:10;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.dash-topbar-inner{max-width:1280px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dash-topbar h2{font-family:'Playfair Display',serif;color:#fff;font-size:16px;margin:0}
+.dash-topbar-sub{color:var(--gold-light);font-size:11px;margin-top:1px}
+.dash-close{background:rgba(255,255,255,.12);border:none;color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;font-family:'IBM Plex Sans',sans-serif}
+.dash-close:hover{background:rgba(255,255,255,.22)}
+.dash-body{max-width:1280px;margin:0 auto;padding:24px 20px 60px}
+
+/* stat cards */
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 12px rgba(15,31,61,.08);border-left:4px solid var(--border)}
+.stat-card.blue{border-left-color:#2471a3}
+.stat-card.green{border-left-color:var(--success)}
+.stat-card.red{border-left-color:var(--error)}
+.stat-card.gold{border-left-color:var(--gold)}
+.stat-card.orange{border-left-color:#e67e22}
+.stat-num{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;color:var(--navy);line-height:1}
+.stat-label{font-size:11px;color:var(--text-muted);margin-top:5px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.stat-sub{font-size:12px;color:var(--text-muted);margin-top:4px}
+
+/* section panels */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.dash-grid.three{grid-template-columns:2fr 1fr}
+.dash-panel{background:#fff;border-radius:12px;box-shadow:0 1px 12px rgba(15,31,61,.08);overflow:hidden}
+.dash-panel-full{grid-column:1/-1}
+.dp-header{background:var(--navy);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dp-header h3{font-family:'Playfair Display',serif;color:#fff;font-size:14px;margin:0}
+.dp-header-actions{display:flex;gap:6px;align-items:center}
+.dp-body{padding:16px 18px}
+.dp-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.dp-filter select,.dp-filter input{padding:5px 9px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:'IBM Plex Sans',sans-serif;outline:none}
+
+/* contracts table */
+.ct-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.ct-table th{background:var(--cream-dark);color:var(--text-muted);padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;border-bottom:2px solid var(--border)}
+.ct-table td{padding:8px 10px;border-bottom:1px solid var(--cream-dark);vertical-align:middle}
+.ct-table tr:hover td{background:#fafaf8}
+.ct-table .cn{font-weight:600;color:var(--navy);font-size:13px}
+.ct-table .buyer{font-size:12px;color:var(--text-muted)}
+
+/* status badges */
+.sb{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
+.sb-new{background:#e8f4fd;color:#2471a3}
+.sb-paid{background:#d5f5e3;color:#1e8449}
+.sb-shipped{background:#d0f0e8;color:#148a72}
+.sb-overdue{background:#fde8e8;color:#c0392b;animation:pulse-red 2s infinite}
+.sb-partial{background:#fef9e7;color:#9a7d0a}
+.sb-closed{background:var(--cream-dark);color:var(--text-muted)}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.65}}
+
+/* tasks */
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream-dark)}
+.task-item:last-child{border-bottom:none}
+.task-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);cursor:pointer;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.task-check.done{background:var(--success);border-color:var(--success);color:#fff}
+.task-check.done::after{content:'✓';font-size:11px;font-weight:700}
+.task-text{font-size:13px;color:var(--text)}
+.task-text.done{text-decoration:line-through;color:var(--text-muted)}
+.task-meta{font-size:10px;color:var(--text-muted);margin-top:2px}
+.task-pri{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.task-pri.high{background:var(--error)}
+.task-pri.med{background:var(--gold)}
+.task-pri.low{background:var(--success)}
+.task-add-form{background:var(--cream);border-radius:8px;padding:12px;margin-top:10px;display:none}
+.task-add-form.open{display:block}
+
+/* calls */
+.call-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--cream-dark)}
+.call-item:last-child{border-bottom:none}
+.call-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-mid));color:var(--gold-light);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.call-info{flex:1;min-width:0}
+.call-name{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.call-phone{font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace}
+.call-status{display:flex;gap:5px}
+.call-btn{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;transition:all .15s}
+.call-btn-done{background:#d5f5e3;color:#1e8449}
+.call-btn-skip{background:var(--cream-dark);color:var(--text-muted)}
+.call-btn-done:hover{background:#aae8c0}
+
+/* empty state */
+.dash-empty{text-align:center;padding:32px 16px;color:var(--text-muted)}
+.dash-empty-icon{font-size:36px;margin-bottom:8px}
+.dash-empty p{font-size:13px}
+
+/* add contract status modal */
+.status-modal{display:none;position:fixed;inset:0;background:rgba(15,31,61,.6);z-index:800;align-items:center;justify-content:center}
+.status-modal.open{display:flex}
+.status-modal-card{background:#fff;border-radius:12px;padding:28px 32px;width:100%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.status-modal-card h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:16px;margin-bottom:16px}
+
+/* add task / call form */
+.add-call-form{background:var(--cream);border-radius:8px;padding:12px;margin-top:10px;display:none}
+.add-call-form.open{display:block}
+
+@media(max-width:900px){.dash-stats{grid-template-columns:1fr 1fr}.dash-grid{grid-template-columns:1fr}.dash-grid.three{grid-template-columns:1fr}}
+@media(max-width:600px){.dash-stats{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<!-- ══ DASHBOARD OVERLAY ══ -->
+<div class="dash-overlay" id="dashOverlay">
+
+  <div class="dash-topbar">
+    <div class="dash-topbar-inner">
+      <div>
+        <div class="dash-topbar h2" style="font-family:'Playfair Display',serif;color:#fff;font-size:16px" id="dashTitle">📊 Панель управления</div>
+        <div class="dash-topbar-sub" id="dashSubtitle">TEXNIKA ADVANS SERVIS</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="dashManagerFilter" onchange="renderDashboard()" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:12px;font-family:'IBM Plex Sans',sans-serif;display:none" id="dashManagerFilter">
+          <option value="">Все менеджеры</option>
+        </select>
+        <button class="dash-close" onclick="closeDashboard()">← Назад к договорам</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-body">
+
+    <!-- STATS ROW -->
+    <div class="dash-stats" id="dashStats">
+      <div class="stat-card blue"><div class="stat-num" id="st_total">—</div><div class="stat-label">Всего договоров</div><div class="stat-sub" id="st_total_sum">—</div></div>
+      <div class="stat-card green"><div class="stat-num" id="st_paid">—</div><div class="stat-label">Оплачено</div><div class="stat-sub" id="st_paid_sum">—</div></div>
+      <div class="stat-card red"><div class="stat-num" id="st_overdue">—</div><div class="stat-label">Просрочено</div><div class="stat-sub" id="st_overdue_sum">—</div></div>
+      <div class="stat-card gold"><div class="stat-num" id="st_pending">—</div><div class="stat-label">Ожидает оплаты</div><div class="stat-sub" id="st_pending_sum">—</div></div>
+    </div>
+
+    <!-- CONTRACTS + TASKS -->
+    <div class="dash-grid three">
+
+      <!-- CONTRACTS TABLE -->
+      <div class="dash-panel">
+        <div class="dp-header">
+          <h3>📄 Мои договоры</h3>
+          <div class="dp-header-actions">
+            <select id="ctFilterStatus" onchange="renderContractsTable()" style="padding:4px 8px;border-radius:5px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:11px;font-family:'IBM Plex Sans',sans-serif">
+              <option value="">Все статусы</option>
+              <option value="new">Новые</option>
+              <option value="paid">Оплачены</option>
+              <option value="shipped">Отгружены</option>
+              <option value="overdue">Просрочены</option>
+              <option value="partial">Частичная оплата</option>
+            </select>
+          </div>
+        </div>
+        <div class="dp-body" style="padding:0">
+          <div style="overflow-x:auto;max-height:420px;overflow-y:auto">
+            <table class="ct-table">
+              <thead><tr>
+                <th>№ / Дата</th>
+                <th>Покупатель</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>Действие</th>
+              </tr></thead>
+              <tbody id="contractsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASKS -->
+      <div class="dash-panel">
+        <div class="dp-header">
+          <h3>✅ Задачи</h3>
+          <div class="dp-header-actions">
+            <button class="dash-close" style="font-size:11px;padding:4px 10px" onclick="openTaskForm()">＋ Добавить</button>
+          </div>
+        </div>
+        <div class="dp-body">
+          <div id="tasksContainer"></div>
+          <div class="task-add-form" id="taskAddForm">
+            <div style="margin-bottom:8px">
+              <input type="text" id="taskText" placeholder="Текст задачи..." style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'IBM Plex Sans',sans-serif;outline:none;margin-bottom:6px">
+              <div style="display:flex;gap:6px">
+                <select id="taskPri" style="flex:1;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:'IBM Plex Sans',sans-serif">
+                  <option value="high">🔴 Высокий</option>
+                  <option value="med" selected>🟡 Средний</option>
+                  <option value="low">🟢 Низкий</option>
+                </select>
+                <input type="date" id="taskDue" style="flex:1;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:'IBM Plex Sans',sans-serif">
+                <select id="taskAssign" style="flex:1;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:'IBM Plex Sans',sans-serif" title="Назначить менеджеру"></select>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="btn btn-primary btn-sm" onclick="saveTask()">Сохранить</button>
+              <button class="btn btn-secondary btn-sm" onclick="closeTaskForm()">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALLS -->
+    <div class="dash-grid">
+      <div class="dash-panel">
+        <div class="dp-header">
+          <h3>📞 Холодные звонки</h3>
+          <div class="dp-header-actions">
+            <button class="dash-close" style="font-size:11px;padding:4px 10px" onclick="openCallForm()">＋ Добавить</button>
+          </div>
+        </div>
+        <div class="dp-body">
+          <div id="callsContainer"></div>
+          <div class="add-call-form" id="callAddForm">
+            <div class="field-grid" style="gap:8px;margin-bottom:8px">
+              <div class="field-group"><label style="font-size:10px">Название компании</label><input type="text" id="callCompany" placeholder='ООО "..."' style="padding:7px 10px;font-size:13px"></div>
+              <div class="field-group"><label style="font-size:10px">Контактное лицо</label><input type="text" id="callContact" placeholder="Иванов И.И." style="padding:7px 10px;font-size:13px"></div>
+              <div class="field-group"><label style="font-size:10px">Телефон</label><input type="text" id="callPhone" placeholder="+998 XX XXX XX XX" style="padding:7px 10px;font-size:13px"></div>
+              <div class="field-group"><label style="font-size:10px">Назначить</label>
+                <select id="callAssign" style="padding:7px 10px;font-size:13px;border:1.5px solid var(--border);border-radius:7px;font-family:'IBM Plex Sans',sans-serif"></select>
+              </div>
+              <div class="field-group span2"><label style="font-size:10px">Комментарий / цель звонка</label><input type="text" id="callNote" placeholder="Предложить спецтехнику..." style="padding:7px 10px;font-size:13px"></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-primary btn-sm" onclick="saveCall()">Сохранить</button>
+              <button class="btn btn-secondary btn-sm" onclick="closeCallForm()">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY CHART (last 30 days) -->
+      <div class="dash-panel">
+        <div class="dp-header"><h3>📈 Активность — последние 30 дней</h3></div>
+        <div class="dp-body">
+          <canvas id="activityChart" height="180"></canvas>
+          <div id="activityLegend" style="margin-top:12px;font-size:11px;color:var(--text-muted)"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ CONTRACT STATUS UPDATE MODAL ══ -->
+<div class="status-modal" id="statusModal">
+  <div class="status-modal-card">
+    <h3>📄 Обновить статус договора</h3>
+    <input type="hidden" id="smContractId">
+    <div class="field-group" style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Статус</label>
+      <select id="smStatus" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13.5px;font-family:'IBM Plex Sans',sans-serif;margin-top:4px">
+        <option value="new">🆕 Новый — ожидает оплаты</option>
+        <option value="partial">💛 Частичная оплата</option>
+        <option value="paid">✅ Оплачен полностью</option>
+        <option value="shipped">📦 Товар отгружен</option>
+        <option value="overdue">🔴 Просрочен</option>
+        <option value="closed">✔️ Закрыт</option>
+      </select>
+    </div>
+    <div class="field-group" style="margin-bottom:16px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px">Комментарий</label>
+      <input type="text" id="smNote" placeholder="Например: оплата 50% поступила 15.04.2026" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'IBM Plex Sans',sans-serif;outline:none">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveContractStatus()">💾 Сохранить</button>
+      <button class="btn btn-secondary" onclick="closeStatusModal()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AUTH SCREEN ══ -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">📄</div>
+      <h1>TEXNIKA ADVANS SERVIS</h1>
+      <p>Система генерации договоров</p>
+    </div>
+    <div class="auth-field">
+      <label>Логин</label>
+      <input type="text" id="authLogin" placeholder="Введите логин" autocomplete="username"
+             onkeydown="if(event.key==='Enter')document.getElementById('authPass').focus()">
+    </div>
+    <div class="auth-field">
+      <label>Пароль</label>
+      <input type="password" id="authPass" placeholder="Введите пароль" autocomplete="current-password"
+             onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="auth-btn" onclick="doLogin()">Войти →</button>
+    <div class="auth-error" id="authError"></div>
+  </div>
+  <div class="auth-footer">ЧП «TEXNIKA ADVANS SERVIS» · Ташкент · Только для сотрудников</div>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2>⚙️ Панель администратора</h2>
+      <button class="btn-close-db" onclick="closeAdmin()">✕</button>
+    </div>
+    <div style="padding:22px">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('users',this)">👤 Пользователи</button>
+        <button class="admin-tab" onclick="switchAdminTab('logs',this)">📋 Журнал действий</button>
+      </div>
+
+      <!-- USERS -->
+      <div class="admin-panel active" id="adminPanel_users">
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="openUserForm()">＋ Добавить пользователя</button>
+          <span style="font-size:12px;color:var(--text-muted);align-self:center" id="usersCount"></span>
+        </div>
+        <div class="cf-card" id="userFormCard">
+          <h3 id="userFormTitle">➕ Новый пользователь</h3>
+          <input type="hidden" id="uf_editId">
+          <div class="field-grid" style="margin-bottom:12px">
+            <div class="field-group"><label>Имя (отображается в логе) <span class="req">*</span></label><input type="text" id="uf_name" placeholder="Иванов Иван"></div>
+            <div class="field-group"><label>Логин <span class="req">*</span></label><input type="text" id="uf_login" placeholder="ivanov" autocomplete="off"></div>
+            <div class="field-group"><label>Пароль <span class="req">*</span></label><input type="password" id="uf_pass" placeholder="Минимум 4 символа" autocomplete="new-password"></div>
+            <div class="field-group"><label>Роль</label>
+              <select id="uf_role">
+                <option value="manager">Менеджер</option>
+                <option value="admin">Администратор</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="saveUser()">💾 Сохранить</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeUserForm()">Отмена</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;margin-top:14px">
+          <table class="users-table">
+            <thead><tr><th>#</th><th>Имя</th><th>Логин</th><th>Роль</th><th>Последний вход</th><th>Договоров</th><th>Действия</th></tr></thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LOGS -->
+      <div class="admin-panel" id="adminPanel_logs">
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+          <input class="db-search-inp" id="logSearchInp" placeholder="🔍 Поиск по имени, действию..." oninput="renderLogs()" style="max-width:280px">
+          <select id="logFilterAction" onchange="renderLogs()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'IBM Plex Sans',sans-serif">
+            <option value="">Все действия</option>
+            <option value="login">Входы в систему</option>
+            <option value="contract">Договоры</option>
+            <option value="fail">Ошибки входа</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" onclick="exportLogs()">⬇ Экспорт CSV</button>
+          <button class="btn btn-danger btn-sm" onclick="clearLogs()">🗑 Очистить лог</button>
+          <span style="font-size:12px;color:var(--text-muted)" id="logsCount"></span>
+        </div>
+        <div style="overflow-x:auto;max-height:420px;overflow-y:auto">
+          <table class="log-table">
+            <thead><tr><th>Дата/Время</th><th>Пользователь</th><th>Действие</th><th>Детали</th><th>IP/Browser</th></tr></thead>
+            <tbody id="logsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ CLIENT DATABASE MODAL ══ -->
+<div class="db-overlay" id="dbOverlay">
+  <div class="db-modal">
+    <div class="db-modal-header">
+      <h2>👥 База клиентов — общая для всех сотрудников</h2>
+      <button class="btn-close-db" onclick="closeDB()">✕</button>
+    </div>
+    <div class="db-modal-body">
+      <div class="db-toolbar">
+        <input class="db-search-inp" id="dbSearchInp" placeholder="🔍 Поиск по названию или ИНН..." oninput="renderDBTable()">
+        <button class="btn btn-gold btn-sm" onclick="openCF()">＋ Добавить клиента</button>
+        <button class="btn btn-secondary btn-sm" onclick="exportDB()">⬇ Экспорт</button>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('dbImportFile').click()">⬆ Импорт</button>
+        <input type="file" id="dbImportFile" accept=".json" style="display:none" onchange="importDB(event)">
+      </div>
+      <div class="cf-card" id="cfCard">
+        <h3 id="cfTitle">➕ Новый клиент</h3>
+        <input type="hidden" id="cfEditId">
+        <div class="field-grid" style="margin-bottom:12px">
+          <div class="field-group span2"><label>Полное наименование <span class="req">*</span></label><input type="text" id="cf_name" placeholder='ООО "MEGA QURILISH"'></div>
+          <div class="field-group"><label>ФИО Директора <span class="req">*</span></label><input type="text" id="cf_director" placeholder="Иванов И.И."></div>
+          <div class="field-group"><label>ИНН <span class="req">*</span></label><input type="text" id="cf_inn" placeholder="123456789"></div>
+          <div class="field-group span2"><label>Юридический адрес</label><input type="text" id="cf_address" placeholder="г. Ташкент, ..."></div>
+          <div class="field-group span2"><label>Расчётный счёт (р/с)</label><input type="text" id="cf_account" placeholder="2020 8000 XXXX XXXX XXXX"></div>
+          <div class="field-group span2"><label>Банк</label><input type="text" id="cf_bank" placeholder='АКБ "ASAKA" Юнусабадский ф-л'></div>
+          <div class="field-group"><label>МФО</label><input type="text" id="cf_mfo" placeholder="00000"></div>
+          <div class="field-group"><label>ОКЭД</label><input type="text" id="cf_oked" placeholder="45191"></div>
+          <div class="field-group"><label>Код НДС</label><input type="text" id="cf_nds" placeholder="326XXXXXXXXX"></div>
+          <div class="field-group"><label>Телефон</label><input type="text" id="cf_phone" placeholder="+998 XX XXX XX XX"></div>
+        </div>
+        <div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" onclick="saveCF()">💾 Сохранить</button><button class="btn btn-secondary btn-sm" onclick="closeCF()">Отмена</button></div>
+      </div>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="clients-table">
+          <thead><tr><th>#</th><th>Организация</th><th>ИНН</th><th>Директор</th><th>Сделок</th><th>Добавлен</th><th>Действия</th></tr></thead>
+          <tbody id="dbTableBody"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted)">⏳ Загрузка базы...</td></tr></tbody>
+        </table>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:8px" id="dbStatsText"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STOCK / WAREHOUSE MODAL ══ -->
+<div class="stock-overlay" id="stockOverlay">
+  <div class="stock-modal">
+    <div class="stock-modal-header">
+      <h2>📦 Склад — остатки товаров из 1С</h2>
+      <button class="btn-close-stock" onclick="closeStock()">✕</button>
+    </div>
+    <div class="stock-modal-body">
+      <div style="background:#fff9e6;border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12.5px;color:#7a5c00;margin-bottom:16px">
+        <strong>Инструкция для бухгалтера:</strong> Выгрузите из 1С отчёт «Остатки товаров» в Excel (.xlsx/.xls) или CSV.
+        Первая строка — заголовки: <strong>Наименование, Количество, Единица</strong> (порядок неважен).
+      </div>
+      <div class="stock-upload-zone" id="stockDropZone" onclick="document.getElementById('stockFileInput').click()"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleStockDrop(event)">
+        <div class="stock-upload-icon">📂</div>
+        <div class="stock-upload-text">Нажмите или перетащите файл Excel/CSV</div>
+        <div class="stock-upload-hint">Поддерживается: .xlsx, .xls, .csv — из 1С «Остатки товаров»</div>
+        <input type="file" id="stockFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleStockFile(event)">
+      </div>
+      <div id="stockLoadStatus" style="text-align:center;padding:8px;font-size:13px;color:var(--text-muted);display:none"></div>
+      <div class="stock-toolbar" id="stockToolbar" style="display:none">
+        <input class="stock-search-inp" id="stockSearchInp" placeholder="🔍 Поиск по наименованию..." oninput="renderStockTable()">
+        <button class="btn btn-secondary btn-sm" onclick="clearStock()">🗑 Очистить склад</button>
+        <span id="stockCountText" style="font-size:12px;color:var(--text-muted)"></span>
+      </div>
+      <div class="stock-table-wrap" id="stockTableWrap" style="display:none">
+        <table class="stock-table">
+          <thead><tr><th>#</th><th>Наименование товара</th><th>Остаток</th><th>Ед.</th><th>Действие</th></tr></thead>
+          <tbody id="stockTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">??</div>
+      <div class="logo-text">
+        <h1>TEXNIKA ADVANS SERVIS</h1>
+        <p data-ru="Генератор договоров купли-продажи" data-uz="Sotib olish-sotish shartnomasi generatori">Генератор договоров купли-продажи</p>
+      </div>
+    </div>
+          <button class="nav-btn" onclick="openDashboard()" style="margin-right:4px">📊 Дашборд</button>
+          <button class="nav-btn" onclick="openStock()" style="margin-right:4px">📦 Склад (1С)</button>
+      <button class="nav-btn" onclick="openDB()" style="margin-right:8px">👥 База клиентов</button>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="user-badge" id="userBadge" style="display:none">
+        <div>
+          <div class="user-badge-name" id="userBadgeName">—</div>
+          <div class="user-badge-role" id="userBadgeRole">—</div>
+        </div>
+      </div>
+      <button class="nav-btn" id="adminNavBtn" onclick="openAdmin()" style="display:none;background:rgba(139,26,26,.3);border-color:rgba(255,100,100,.4);color:#ffaaaa">⚙️ Админ</button>
+      <button class="btn-logout" id="logoutBtn" onclick="doLogout()" style="display:none">Выйти</button>
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('ru')">РУС</button>
+        <button class="lang-btn" onclick="setLang('uz')">O'ZB</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="step-item">
+      <div class="step-circle active" id="sc1">1</div>
+      <span class="step-label active" data-ru="Стороны" data-uz="Tomonlar">Стороны</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc2">2</div>
+      <span class="step-label" data-ru="Товар" data-uz="Tovar">Товар</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc3">3</div>
+      <span class="step-label" data-ru="Оплата" data-uz="To'lov">Оплата</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc4">4</div>
+      <span class="step-label" data-ru="Условия" data-uz="Shartlar">Условия</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc5">5</div>
+      <span class="step-label" data-ru="Договор" data-uz="Shartnoma">Договор</span>
+    </div>
+  </div>
+
+  <!-- FORM AREA -->
+  <div class="form-area">
+
+    <!-- STEP 1: СТОРОНЫ -->
+    <div class="section-card active" id="step1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title" data-ru="Стороны договора" data-uz="Shartnoma tomonlari">Стороны договора</div>
+      </div>
+      <div class="section-body">
+
+        <!-- Поставщик (фиксированный) -->
+        <div class="supplier-box" style="margin-bottom:20px">
+          <h3>?? <span data-ru="Поставщик (зафиксирован)" data-uz="Yetkazib beruvchi (belgilangan)">Поставщик (зафиксирован)</span></h3>
+          <div class="sup-field"><span data-ru="Название" data-uz="Nomi">Название</span><span>ЧП «TEXNIKA ADVANS SERVIS»</span></div>
+          <div class="sup-field"><span data-ru="Директор" data-uz="Direktor">Директор</span><span>Мираюбов М.М.</span></div>
+          <div class="sup-field"><span data-ru="Адрес" data-uz="Manzil">Адрес</span><span>100084, г.Ташкент, Юнусабадский р-н, ул.Амира Темура 95А</span></div>
+          <div class="sup-field"><span>р/с</span><span>2020 8000 9047 9930 6001</span></div>
+          <div class="sup-field"><span data-ru="Банк" data-uz="Bank">Банк</span><span>АИКБ "ИПАК ЙУЛИ" Мирзо-Улугбекский ф-л</span></div>
+          <div class="sup-field"><span>МФО</span><span>00421</span></div>
+          <div class="sup-field"><span>ИНН</span><span>301301763</span></div>
+          <div class="sup-field"><span>ОКЭД</span><span>45191</span></div>
+          <div class="sup-field"><span data-ru="Код НДС" data-uz="QQS kodi">Код НДС</span><span>326080001476</span></div>
+        </div>
+
+        <!-- Реквизиты договора -->
+        <div style="margin-bottom:20px">
+          <p style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;" data-ru="?? Реквизиты договора" data-uz="?? Shartnoma rekvizitlari">?? Реквизиты договора</p>
+          <div class="field-grid">
+            <div class="field-group">
+              <label data-ru="Номер договора" data-uz="Shartnoma raqami">Номер договора <span class="req">*</span></label>
+              <input type="text" id="contractNum" placeholder="например: 41/ОП" />
+            </div>
+            <div class="field-group">
+              <label data-ru="Дата договора" data-uz="Shartnoma sanasi">Дата договора <span class="req">*</span></label>
+              <input type="date" id="contractDate" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Покупатель — с базой клиентов -->
+        <span class="buyer-mode-label">🏦 Покупатель — выберите способ заполнения:</span>
+        <div class="buyer-tabs">
+          <button class="buyer-tab-btn active" onclick="setBuyerTab('db',this)">
+            <span class="buyer-tab-icon">👥</span>Из базы клиентов
+          </button>
+          <button class="buyer-tab-btn" onclick="setBuyerTab('manual',this)">
+            <span class="buyer-tab-icon">✏️</span>Ввести вручную
+          </button>
+        </div>
+        <div class="buyer-panel active" id="bpanel_db">
+          <div class="client-srch-wrap">
+            <span class="srch-icon">🔍</span>
+            <input class="client-srch-input" id="buyerSearchInput" placeholder="Введите название организации или ИНН..." oninput="onBuyerSearch(this.value)" onfocus="openBuyerDropdown()" autocomplete="off">
+            <div class="client-dropdown" id="buyerDropdown"></div>
+          </div>
+          <div class="selected-client" id="selectedClientCard"></div>
+          <div class="buyer-hint" id="buyerHint">Начните вводить название или ИНН. Нового клиента добавьте через <strong>«👥 База клиентов»</strong>.</div>
+        </div>
+        <div class="buyer-panel" id="bpanel_manual">
+          <div class="field-grid">
+            <div class="field-group span2"><label data-ru="Полное наименование организации" data-uz="Tashkilot to'liq nomi">Полное наименование организации <span class="req">*</span></label><input type="text" id="buyerName" placeholder='например: ООО "MEGA QURILISH"' /></div>
+            <div class="field-group"><label data-ru="ФИО Директора" data-uz="Direktor F.I.O.">ФИО Директора <span class="req">*</span></label><input type="text" id="buyerDirector" placeholder="Иванов И.И." /></div>
+            <div class="field-group"><label data-ru="ИНН" data-uz="STIR">ИНН <span class="req">*</span></label><input type="text" id="buyerINN" placeholder="123456789" /></div>
+            <div class="field-group span2"><label data-ru="Юридический адрес" data-uz="Yuridik manzil">Юридический адрес <span class="req">*</span></label><input type="text" id="buyerAddress" placeholder="г. Ташкент, ..." /></div>
+            <div class="field-group span2"><label data-ru="Расчётный счёт (р/с)" data-uz="Hisob raqam">Расчётный счёт (р/с) <span class="req">*</span></label><input type="text" id="buyerAccount" placeholder="2020 8000 XXXX XXXX XXXX" /></div>
+            <div class="field-group span2"><label data-ru="Наименование банка" data-uz="Bank nomi">Наименование банка <span class="req">*</span></label><input type="text" id="buyerBank" placeholder='АКБ "ASAKA" Юнусабадский ф-л' /></div>
+            <div class="field-group"><label>МФО <span class="req">*</span></label><input type="text" id="buyerMFO" placeholder="00000" /></div>
+            <div class="field-group"><label data-ru="ОКЭД" data-uz="IFUT">ОКЭД</label><input type="text" id="buyerOKED" placeholder="45191" /></div>
+            <div class="field-group span2"><label data-ru="Код НДС (если есть)" data-uz="QQS kodi">Код НДС (если есть)</label><input type="text" id="buyerNDS" placeholder="326XXXXXXXXX" /><span class="field-hint">Оставьте пустым если не плательщик НДС</span></div>
+          </div>
+          <div class="buyer-hint" style="margin-top:10px">💡 После создания договора клиент <strong>автоматически сохранится</strong> в общую базу.</div>
+        </div>
+<div class="btn-row">
+          <div></div>
+          <button class="btn btn-primary" onclick="goStep(2)">
+            <span data-ru="Далее: Товар" data-uz="Keyingi: Tovar">Далее: Товар</span> →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: ТОВАР -->
+    <div class="section-card" id="step2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title" data-ru="Спецификация товара" data-uz="Tovar spetsifikatsiyasi">Спецификация товара</div>
+      </div>
+      <div class="section-body">
+        <p class="field-hint" style="margin-bottom:12px;" data-ru="Укажите товары, которые являются предметом договора." data-uz="Shartnoma predmeti bo'lgan tovarlarni kiriting.">Укажите товары, которые являются предметом договора.</p>
+        <div class="spec-table-wrap">
+          <table class="spec-table" id="specTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Наименование товара</th>
+                <th>Ед.</th>
+                <th>Кол-во</th>
+                <th style="background:#1a3a20;color:#b8e8b8;min-width:130px">Сумма с НДС 12% ✏️</th>
+                <th style="background:#0f2030;color:var(--gold-light)">НДС (авто)</th>
+                <th style="background:#0f2030;color:var(--gold-light)">Цена без НДС (авто)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="specBody"></tbody>
+            <tfoot>
+              <tr class="spec-total">
+                <td colspan="6" style="text-align:right;font-size:12px;padding-right:12px;" data-ru="ИТОГО к оплате:" data-uz="JAMI to'lov:">ИТОГО к оплате:</td>
+                <td id="grandTotal" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--navy);">0</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addRow()">＋ <span data-ru="Добавить строку" data-uz="Qator qo'shish">Добавить строку</span></button>
+
+        <div class="field-grid" style="margin-top:18px">
+          <div class="field-group">
+            <label data-ru="Страна происхождения" data-uz="Kelib chiqish mamlakati">Страна происхождения</label>
+            <input type="text" id="country" value="Китайская Народная Республика" />
+          </div>
+          <div class="field-group">
+            <label data-ru="Состояние товара" data-uz="Tovar holati">Состояние товара</label>
+            <select id="goodsCondition">
+              <option value="new" data-ru="Новый, не бывший в эксплуатации" data-uz="Yangi, foydalanilmagan">Новый, не бывший в эксплуатации</option>
+              <option value="used" data-ru="Бывший в употреблении" data-uz="Ishlatilgan">Бывший в употреблении</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="goStep(1)">← <span data-ru="Назад" data-uz="Orqaga">Назад</span></button>
+          <button class="btn btn-primary" onclick="goStep(3)"><span data-ru="Далее: Оплата" data-uz="Keyingi: To'lov">Далее: Оплата</span> →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: ОПЛАТА -->
+    <div class="section-card" id="step3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title" data-ru="Порядок расчётов" data-uz="Hisob-kitob tartibi">Порядок расчётов</div>
+      </div>
+      <div class="section-body">
+
+        <div style="margin-bottom:16px">
+          <label style="display:block;margin-bottom:8px" data-ru="Форма оплаты" data-uz="To'lov shakli">Форма оплаты</label>
+          <div class="payment-type-btns">
+            <button class="pay-type-btn active" onclick="setPayType('prepay100', this)" data-ru="100% предоплата" data-uz="100% oldindan to'lov">100% предоплата</button>
+            <button class="pay-type-btn" onclick="setPayType('partial', this)" data-ru="Частичная предоплата" data-uz="Qisman oldindan to'lov">Частичная предоплата</button>
+            <button class="pay-type-btn" onclick="setPayType('installment', this)" data-ru="Рассрочка" data-uz="Bo'lib to'lash">Рассрочка</button>
+            <button class="pay-type-btn" onclick="setPayType('postpay', this)" data-ru="Постоплата" data-uz="Keyingi to'lov">Постоплата</button>
+          </div>
+        </div>
+
+        <!-- 100% prepay -->
+        <div id="payBlock_prepay100">
+          <div class="field-grid">
+            <div class="field-group">
+              <label data-ru="Срок оплаты (банковских дней)" data-uz="To'lov muddati (bank kunlari)">Срок оплаты (банк. дней)</label>
+              <input type="number" id="payDays100" value="5" min="1" max="60" />
+            </div>
+          </div>
+          <div class="info-note" data-ru="Покупатель обязуется произвести 100% оплату в течение указанного количества банковских дней с момента подписания Договора." data-uz="Xaridor shartnoma imzolanganidan keyin ko'rsatilgan bank kunlari ichida 100% to'lovni amalga oshirishi shart.">Покупатель обязуется произвести 100% оплату в течение указанного количества банковских дней с момента подписания Договора.</div>
+        </div>
+
+        <!-- Частичная предоплата -->
+        <div id="payBlock_partial" style="display:none">
+          <div class="field-grid three">
+            <div class="field-group">
+              <label data-ru="Размер предоплаты (%)" data-uz="Oldindan to'lov (%)">Размер предоплаты (%)</label>
+              <input type="number" id="prepayPercent" value="50" min="10" max="90" step="5" onchange="updateSidebar()" />
+            </div>
+            <div class="field-group">
+              <label data-ru="Срок предоплаты (банк. дней)" data-uz="Oldindan to'lov muddati">Срок предоплаты (банк. дней)</label>
+              <input type="number" id="prepayDays" value="5" min="1" />
+            </div>
+            <div class="field-group">
+              <label data-ru="Остаток (банк. дней после поставки)" data-uz="Qoldiq (etkazib bergandan keyin)">Остаток (банк. дней после поставки)</label>
+              <input type="number" id="remainDays" value="30" min="1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Рассрочка -->
+        <div id="payBlock_installment" style="display:none">
+          <div class="field-grid">
+            <div class="field-group">
+              <label data-ru="Первоначальный взнос (%)" data-uz="Boshlang'ich to'lov (%)">Первоначальный взнос (%)</label>
+              <input type="number" id="downPayPercent" value="30" min="0" max="90" step="5" onchange="buildSchedule()" />
+            </div>
+            <div class="field-group">
+              <label data-ru="Кол-во платежей" data-uz="To'lovlar soni">Кол-во платежей</label>
+              <input type="number" id="installCount" value="3" min="2" max="24" onchange="buildSchedule()" />
+            </div>
+          </div>
+          <div id="scheduleArea" style="margin-top:14px"></div>
+        </div>
+
+        <!-- Постоплата -->
+        <div id="payBlock_postpay" style="display:none">
+          <div class="field-grid">
+            <div class="field-group">
+              <label data-ru="Срок оплаты после поставки (банк. дней)" data-uz="Etkazib bergandan keyin to'lov muddati">Срок оплаты после поставки (банк. дней)</label>
+              <input type="number" id="postpayDays" value="15" min="1" />
+            </div>
+          </div>
+          <div class="warn-note" data-ru="Постоплата предполагает повышенные риски для Поставщика. Рекомендуется предусмотреть банковскую гарантию." data-uz="Keyingi to'lov Yetkazib beruvchi uchun yuqori xavfni anglatadi. Bank kafolati tavsiya etiladi.">Постоплата предполагает повышенные риски для Поставщика. Рекомендуется предусмотреть банковскую гарантию.</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- ЭСФ -->
+        <div class="field-grid" style="margin-top:4px">
+          <div class="field-group">
+            <label data-ru="Выставление ЭСФ (электронная счёт-фактура)" data-uz="ESH (elektron schyot-faktura)">ЭСФ по НДС (обязательно для НДС)</label>
+            <select id="esfType">
+              <option value="esf_required" data-ru="Обязательно через систему my.soliq.uz" data-uz="my.soliq.uz tizimi orqali majburiy">Обязательно через my.soliq.uz</option>
+              <option value="esf_optional" data-ru="По требованию Покупателя" data-uz="Xaridor talabiga ko'ra">По требованию Покупателя</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label data-ru="Срок выставления ЭСФ (дней)" data-uz="ESH berish muddati (kun)">Срок выставления ЭСФ (дней)</label>
+            <input type="number" id="esfDays" value="3" min="1" max="10" />
+          </div>
+        </div>
+        <div class="info-note" data-ru="⚖️ По Налоговому кодексу РУз (ст. 222) плательщики НДС обязаны выставлять ЭСФ в течение 3 рабочих дней с даты совершения оборота." data-uz="⚖️ O'zbekiston Respublikasi Soliq kodeksiga ko'ra (222-modda) QQS to'lovchilari aylanma amalga oshirilgan sanadan 3 ish kuni ichida ESH berishlari shart.">⚖️ По Налоговому кодексу РУз (ст. 222) плательщики НДС обязаны выставлять ЭСФ в течение 3 рабочих дней с даты совершения оборота.</div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="goStep(2)">← <span data-ru="Назад" data-uz="Orqaga">Назад</span></button>
+          <button class="btn btn-primary" onclick="goStep(4)"><span data-ru="Далее: Условия" data-uz="Keyingi: Shartlar">Далее: Условия</span> →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: УСЛОВИЯ -->
+    <div class="section-card" id="step4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title" data-ru="Условия поставки и гарантии" data-uz="Yetkazib berish va kafolat shartlari">Условия поставки и гарантии</div>
+      </div>
+      <div class="section-body">
+
+        <!-- Поставка -->
+        <p style="font-size:12px;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:10px" data-ru="Условия поставки" data-uz="Yetkazib berish shartlari">Условия поставки</p>
+        <div class="field-grid">
+          <div class="field-group">
+            <label data-ru="Срок поставки (банк. дней после 100% оплаты)" data-uz="Yetkazib berish muddati (bank kunlari)">Срок поставки (банк. дней)</label>
+            <input type="number" id="deliveryDays" value="10" min="1" />
+          </div>
+          <div class="field-group">
+            <label data-ru="Способ поставки" data-uz="Yetkazib berish usuli">Способ поставки</label>
+            <select id="deliveryMethod">
+              <option value="self" data-ru="Самовывоз со склада Поставщика" data-uz="Yetkazib beruvchi omboridan o'zi olib ketish">Самовывоз со склада Поставщика</option>
+              <option value="delivery" data-ru="Доставка до склада Покупателя" data-uz="Xaridor omborigacha yetkazib berish">Доставка до склада Покупателя</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Гарантия -->
+        <p style="font-size:12px;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:10px" data-ru="Гарантийные условия" data-uz="Kafolat shartlari">Гарантийные условия</p>
+        <label style="display:block;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em" data-ru="Тип гарантии" data-uz="Kafolat turi">Тип гарантии</label>
+        <div class="condition-grid" id="warrantyGrid">
+          <label class="condition-card selected">
+            <input type="radio" name="warranty" value="spec_tech" checked onchange="selectCard(this)">
+            <div class="condition-card-title" data-ru="??️ Спецтехника" data-uz="??️ Maxsus texnika">??️ Спецтехника</div>
+            <div class="condition-card-desc" data-ru="1 год или 2 000 моточасов (что наступит раньше)" data-uz="1 yil yoki 2 000 motosoat (qaysi birinchi bo'lsa)">1 год или 2 000 моточасов (что наступит раньше)</div>
+          </label>
+          <label class="condition-card">
+            <input type="radio" name="warranty" value="self_prop" onchange="selectCard(this)">
+            <div class="condition-card-title" data-ru="?? Самоходная техника" data-uz="?? O'z yuruvchi texnika">?? Самоходная техника</div>
+            <div class="condition-card-desc" data-ru="6 месяцев вне зависимости от пробега" data-uz="Bosib o'tilgan masofadan qat'i nazar 6 oy">6 месяцев вне зависимости от пробега</div>
+          </label>
+          <label class="condition-card">
+            <input type="radio" name="warranty" value="custom" onchange="selectCard(this)">
+            <div class="condition-card-title" data-ru="⚙️ Иное оборудование" data-uz="⚙️ Boshqa uskunalar">⚙️ Иное оборудование</div>
+            <div class="condition-card-desc" data-ru="Указать срок вручную" data-uz="Muddatni qo'lda kiriting">Указать срок вручную</div>
+          </label>
+          <label class="condition-card">
+            <input type="radio" name="warranty" value="none" onchange="selectCard(this)">
+            <div class="condition-card-title" data-ru="❌ Без гарантии" data-uz="❌ Kafolatsiz">❌ Без гарантии</div>
+            <div class="condition-card-desc" data-ru="Гарантийные обязательства не предусмотрены" data-uz="Kafolat majburiyatlari nazarda tutilmagan">Гарантийные обязательства не предусмотрены</div>
+          </label>
+        </div>
+        <div id="customWarrantyBlock" style="margin-top:12px;display:none">
+          <div class="field-group">
+            <label data-ru="Гарантийный срок" data-uz="Kafolat muddati">Гарантийный срок</label>
+            <input type="text" id="customWarranty" placeholder="например: 12 месяцев с даты поставки" />
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Штрафные санкции -->
+        <p style="font-size:12px;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:10px" data-ru="Штрафные санкции" data-uz="Jarimalar">Штрафные санкции</p>
+        <div class="field-grid three">
+          <div class="field-group">
+            <label data-ru="Пеня за просрочку поставки (%/день)" data-uz="Yetkazib kechiktirgani uchun jarima (%/kun)">Пеня за просрочку поставки (%/день)</label>
+            <input type="number" id="penaltySupplier" value="0.1" step="0.05" min="0.05" />
+          </div>
+          <div class="field-group">
+            <label data-ru="Пеня за просрочку оплаты (%/день)" data-uz="To'lovni kechiktirganlik uchun jarima (%/kun)">Пеня за просрочку оплаты (%/день)</label>
+            <input type="number" id="penaltyBuyer" value="0.1" step="0.05" min="0.05" />
+          </div>
+          <div class="field-group">
+            <label data-ru="Максимальный штраф (% от суммы)" data-uz="Maksimal jarima (summadan %)">Макс. штраф (% от суммы)</label>
+            <input type="number" id="maxPenalty" value="10" step="5" min="5" max="30" />
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Экономический суд -->
+        <div class="field-grid">
+          <div class="field-group">
+            <label data-ru="Юрисдикция (суд)" data-uz="Yurisdiksiya (sud)">Юрисдикция (суд)</label>
+            <select id="courtCity">
+              <option value="Ташкент" data-ru="Экономический суд г. Ташкента" data-uz="Toshkent shahri iqtisodiy sudi">Экономический суд г. Ташкента</option>
+              <option value="Самарканд" data-ru="Экономический суд г. Самарканда" data-uz="Samarqand iqtisodiy sudi">Экономический суд Самаркандской обл.</option>
+              <option value="Фергана" data-ru="Экономический суд Ферганской обл." data-uz="Farg'ona viloyati iqtisodiy sudi">Экономический суд Ферганской обл.</option>
+              <option value="Бухара" data-ru="Экономический суд Бухарской обл." data-uz="Buxoro viloyati iqtisodiy sudi">Экономический суд Бухарской обл.</option>
+              <option value="Андижан" data-ru="Экономический суд Андижанской обл." data-uz="Andijon viloyati iqtisodiy sudi">Экономический суд Андижанской обл.</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label data-ru="Экземпляров договора" data-uz="Shartnoma nusxalari">Экземпляров договора</label>
+            <select id="copies">
+              <option value="2">2 экземпляра</option>
+              <option value="3" selected>3 экземпляра</option>
+              <option value="4">4 экземпляра</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="goStep(3)">← <span data-ru="Назад" data-uz="Orqaga">Назад</span></button>
+          <button class="btn btn-primary" onclick="goStep(5)"><span data-ru="Создать договор" data-uz="Shartnoma yaratish">Создать договор</span> →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: ГОТОВО -->
+    <div class="section-card" id="step5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title" data-ru="Договор готов к скачиванию" data-uz="Shartnoma yuklab olishga tayyor">Договор готов к скачиванию</div>
+      </div>
+      <div class="section-body" style="text-align:center;padding:40px 24px">
+        <div style="font-size:56px;margin-bottom:16px">??</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:8px" id="readyTitle">Договор купли-продажи сформирован</h2>
+        <p style="color:var(--text-muted);margin-bottom:28px;font-size:13.5px" id="readySub">Нажмите кнопку ниже для скачивания готового договора в формате Word (.docx)</p>
+        <button class="btn btn-download" onclick="generateDocx()" id="downloadBtn">
+          ⬇ <span data-ru="Скачать договор (.docx)" data-uz="Shartnomani yuklab olish (.docx)">Скачать договор (.docx)</span>
+        </button>
+        <p id="downloadStatus" style="margin-top:14px;font-size:12px;color:var(--text-muted);"></p>
+        <div class="btn-row" style="justify-content:center;margin-top:24px">
+          <button class="btn btn-secondary" onclick="goStep(4)">← <span data-ru="Редактировать условия" data-uz="Shartlarni tahrirlash">Редактировать</span></button>
+          <button class="btn btn-gold" onclick="resetForm()">?? <span data-ru="Новый договор" data-uz="Yangi shartnoma">Новый договор</span></button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /form-area -->
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="preview-card">
+      <div class="preview-header">
+        <span style="font-size:18px">??</span>
+        <h3 data-ru="Сводка договора" data-uz="Shartnoma xulosasi">Сводка договора</h3>
+      </div>
+      <div class="preview-body">
+        <div class="preview-row">
+          <span class="pk" data-ru="Номер" data-uz="Raqami">Номер</span>
+          <span class="pv" id="pvNum">—</span>
+        </div>
+        <div class="preview-row">
+          <span class="pk" data-ru="Дата" data-uz="Sana">Дата</span>
+          <span class="pv" id="pvDate">—</span>
+        </div>
+        <div class="preview-row">
+          <span class="pk" data-ru="Покупатель" data-uz="Xaridor">Покупатель</span>
+          <span class="pv" id="pvBuyer" style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;">—</span>
+        </div>
+        <div class="preview-row">
+          <span class="pk" data-ru="Позиций" data-uz="Pozitsiyalar">Позиций</span>
+          <span class="pv" id="pvItems">0</span>
+        </div>
+        <div class="preview-row">
+          <span class="pk" data-ru="НДС 12%" data-uz="QQS 12%">НДС 12%</span>
+          <span class="pv" id="pvNDS">0 сум</span>
+        </div>
+        <div class="total-amount">
+          <div class="label" data-ru="ИТОГО К ОПЛАТЕ" data-uz="JAMI TO'LOV">ИТОГО К ОПЛАТЕ</div>
+          <div class="amount" id="pvTotal">0</div>
+          <div class="currency" data-ru="узбекских сум" data-uz="o'zbek so'mi">узбекских сум</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-header">
+        <span style="font-size:18px">✅</span>
+        <h3 data-ru="Заполнено" data-uz="To'ldirildi">Заполнено</h3>
+      </div>
+      <div class="preview-body">
+        <div class="checklist" id="checklist">
+          <div class="check-item" id="chk1"><div class="check-icon">○</div><span data-ru="Реквизиты покупателя" data-uz="Xaridor rekvizitlari">Реквизиты покупателя</span></div>
+          <div class="check-item" id="chk2"><div class="check-icon">○</div><span data-ru="Товары в спецификации" data-uz="Tovarlar spetsifikatsiyasi">Товары в спецификации</span></div>
+          <div class="check-item" id="chk3"><div class="check-icon">○</div><span data-ru="Условия оплаты" data-uz="To'lov shartlari">Условия оплаты</span></div>
+          <div class="check-item" id="chk4"><div class="check-icon">○</div><span data-ru="Условия поставки" data-uz="Yetkazib berish shartlari">Условия поставки</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-header">
+        <span style="font-size:18px">⚖️</span>
+        <h3 data-ru="Правовая база" data-uz="Huquqiy asos">Правовая база</h3>
+      </div>
+      <div class="preview-body" style="font-size:11.5px;color:var(--text-muted);line-height:1.7">
+        <div style="margin-bottom:6px">✓ ГК РУз, гл. о купле-продаже</div>
+        <div style="margin-bottom:6px">✓ Закон №670-I О договорно-правовой базе</div>
+        <div style="margin-bottom:6px">✓ НК РУз, ст. 222 (ЭСФ/НДС)</div>
+        <div style="margin-bottom:6px">✓ Закон о конкуренции РУз</div>
+        <div>✓ Требования ТПП РУз</div>
+      </div>
+    </div>
+  
+      <div class="preview-card" style="margin-top:0">
+        <div class="preview-header"><span style="font-size:16px">📦</span><h3 style="font-size:13px">Склад (1С)</h3></div>
+        <div class="preview-body">
+          <div id="sidebarStockCount" style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px">— позиций</div>
+          <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center" onclick="openStock()">📂 Загрузить из 1С</button>
+        </div>
+      </div>
+      <div class="preview-card" style="margin-top:0">
+        <div class="preview-header"><span style="font-size:16px">👥</span><h3 style="font-size:13px">База клиентов</h3></div>
+        <div class="preview-body">
+          <div id="sidebarDBCount" style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px">— клиентов</div>
+          <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center" onclick="openDB()">📋 Открыть базу</button>
+        </div>
+      </div>
+</aside>
+
+</div><!-- /main -->
+
+
+<!-- scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════
+//  LANGUAGE
+// ════════════════════════════════════════════════════════
+let currentLang = 'ru';
+function setLang(l) {
+  currentLang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => { if(b.textContent.trim() === (l==='ru'?'РУС':"O'ZB")) b.classList.add('active'); });
+  document.querySelectorAll('[data-ru]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + l) || el.getAttribute('data-ru');
+  });
+  // update select options
+  document.querySelectorAll('select option[data-ru]').forEach(o => {
+    o.textContent = o.getAttribute('data-' + l) || o.getAttribute('data-ru');
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  STEP NAVIGATION
+// ════════════════════════════════════════════════════════
+let currentStep = 1;
+function goStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+  currentStep = n;
+  document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  // progress
+  for (let i = 1; i <= 5; i++) {
+    const sc = document.getElementById('sc' + i);
+    const label = sc?.nextElementSibling;
+    sc?.classList.remove('active','done');
+    label?.classList.remove('active');
+    if (i < n) { sc?.classList.add('done'); sc.textContent='✓'; }
+    else if (i === n) { sc?.classList.add('active'); sc.textContent = i; label?.classList.add('active'); }
+    else { sc.textContent = i; }
+  }
+  updateSidebar();
+  if (n === 3) buildSchedule();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function validateStep(n) {
+  if (n === 1) {
+    if (!document.getElementById('contractNum')?.value.trim()) { alert('Введите номер договора'); return false; }
+    if (!document.getElementById('contractDate')?.value) { alert('Выберите дату договора'); return false; }
+    const b = getBuyerData();
+    if (!b || !b.name) { alert(currentBuyerTab==='db' ? 'Выберите покупателя из базы клиентов' : 'Заполните реквизиты покупателя'); return false; }
+    if (currentBuyerTab === 'manual') {
+      const req = ['buyerName','buyerDirector','buyerINN','buyerAddress','buyerAccount','buyerBank','buyerMFO'];
+      for (const id of req) {
+        if (!document.getElementById(id)?.value.trim()) {
+          document.getElementById(id).classList.add('error');
+          alert('Заполните все обязательные поля (*)'); return false;
+        }
+        document.getElementById(id).classList.remove('error');
+      }
+    }
+    return true;
+  }
+  if (n === 2) {
+    if (document.querySelectorAll('#specBody tr').length === 0 || getGrandTotal() === 0) {
+      alert('Добавьте хотя бы один товар с суммой'); return false;
+    }
+  }
+  return true;
+}
+
+
+// ════════════════════════════════════════════════════════
+//  SPEC TABLE
+// ════════════════════════════════════════════════════════
+let rowCount = 0;
+function addRow(name='', unit='шт', qty=1, totalWithNDS=0) {
+  rowCount++;
+  const r = rowCount;
+  const tbody = document.getElementById('specBody');
+  const num = tbody.children.length + 1;
+  const tr = document.createElement('tr');
+  tr.id = 'row_' + r;
+  tr.innerHTML = `
+    <td style="color:var(--text-muted);text-align:center;width:24px;font-size:11px">${num}</td>
+    <td>
+      <div class="prod-wrap">
+        <div class="prod-ghost-wrap">
+          <input type="text" id="rName_${r}" value="${(name||'').replace(/\"/g,'&quot;')}"
+                 placeholder="Введите или выберите из списка"
+                 style="min-width:200px"
+                 oninput="onProductInput(${r},this.value);updateSidebar()"
+                 onfocus="onProductFocus(${r})"
+                 onkeydown="onProductKeydown(event,${r})"
+                 autocomplete="off">
+          <span class="prod-ghost" id="prodGhost_${r}"></span>
+        </div>
+        <div class="prod-ghost-hint" id="prodGhostHint_${r}" style="display:none"></div>
+        <div class="prod-dropdown" id="prodDrop_${r}"></div>
+      </div>
+    </td>
+    <td><select id="rUnit_${r}" style="width:72px">
+      ${['шт','кг','т','м','м²','м³','л','компл','уп'].map(u=>`<option${u===unit?' selected':''}>${u}</option>`).join('')}
+    </select></td>
+    <td><input type="number" id="rQty_${r}" value="${qty}" min="0.001" step="1" style="width:62px"
+         oninput="calcRow(${r});updateSidebar()"></td>
+    <td><input type="number" id="rTotalNDS_${r}" value="${totalWithNDS||''}" min="0" step="100"
+         style="width:128px;border-color:var(--success);font-weight:600"
+         placeholder="Введите сумму"
+         oninput="calcRow(${r});updateSidebar()"></td>
+    <td id="rNDSSum_${r}" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">—</td>
+    <td id="rBase_${r}" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">—</td>
+    <td><button class="btn-del-row" onclick="delRow(${r})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  if (totalWithNDS > 0) calcRow(r);
+  updateSidebar();
+}
+
+
+function calcRow(r) {
+  const total = parseFloat(document.getElementById('rTotalNDS_'+r)?.value) || 0;
+  const ndsSum = total * 12 / 112;
+  const base   = total - ndsSum;
+  const ndsEl  = document.getElementById('rNDSSum_'+r);
+  const baseEl = document.getElementById('rBase_'+r);
+  if (ndsEl)  ndsEl.textContent  = total > 0 ? formatNum(ndsSum) + ' сум' : '—';
+  if (baseEl) baseEl.textContent = total > 0 ? formatNum(base)   + ' сум' : '—';
+  updateGrandTotal();
+}
+
+
+function delRow(r) {
+  document.getElementById('row_'+r)?.remove();
+  // renumber
+  document.querySelectorAll('#specBody tr').forEach((tr, i) => {
+    tr.querySelector('td:first-child').textContent = i+1;
+  });
+  updateGrandTotal();
+  updateSidebar();
+}
+
+function getGrandTotal() {
+  let t = 0;
+  document.querySelectorAll('#specBody tr').forEach(tr => {
+    const id = tr.id.replace('row_','');
+    t += parseFloat(document.getElementById('rTotalNDS_'+id)?.value) || 0;
+  });
+  return t;
+}
+
+
+function getTotalNDS() {
+  let n = 0;
+  document.querySelectorAll('#specBody tr').forEach(tr => {
+    const id = tr.id.replace('row_','');
+    const total = parseFloat(document.getElementById('rTotalNDS_'+id)?.value) || 0;
+    n += total * 12 / 112;
+  });
+  return n;
+}
+
+
+function updateGrandTotal() {
+  document.getElementById('grandTotal').textContent = formatNum(getGrandTotal());
+}
+
+// ════════════════════════════════════════════════════════
+//  PAYMENT
+// ════════════════════════════════════════════════════════
+let payType = 'prepay100';
+function setPayType(type, btn) {
+  payType = type;
+  document.querySelectorAll('.pay-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['prepay100','partial','installment','postpay'].forEach(t => {
+    const el = document.getElementById('payBlock_'+t);
+    if(el) el.style.display = t===type?'block':'none';
+  });
+  if (type==='installment') buildSchedule();
+}
+
+function buildSchedule() {
+  const total = getGrandTotal();
+  const downP = parseFloat(document.getElementById('downPayPercent')?.value)||30;
+  const count = parseInt(document.getElementById('installCount')?.value)||3;
+  const downAmt = total * downP / 100;
+  const remain = total - downAmt;
+  const monthly = remain / count;
+
+  let html = `<table class="schedule-table"><thead><tr>
+    <th>#</th>
+    <th>${currentLang==='ru'?'Платёж':'To\'lov'}</th>
+    <th>${currentLang==='ru'?'Сумма (сум)':'Summa (so\'m)'}</th>
+    <th>${currentLang==='ru'?'Срок':'Muddat'}</th>
+  </tr></thead><tbody>`;
+
+  html += `<tr><td>1</td><td>${currentLang==='ru'?'Первоначальный взнос':'Boshlang\'ich to\'lov'} (${downP}%)</td>
+    <td style="font-family:'IBM Plex Mono',monospace">${formatNum(downAmt)}</td>
+    <td>${currentLang==='ru'?'При подписании договора':'Shartnoma imzolanganda'}</td></tr>`;
+
+  for (let i = 1; i <= count; i++) {
+    html += `<tr><td>${i+1}</td><td>${currentLang==='ru'?'Платёж':'To\'lov'} №${i}</td>
+      <td style="font-family:'IBM Plex Mono',monospace">${formatNum(monthly)}</td>
+      <td><input type="text" id="sch_date_${i}" placeholder="${currentLang==='ru'?'Дата или период':'Sana yoki davr'}" style="width:100%;border:none;background:transparent;font-size:12.5px"></td></tr>`;
+  }
+  html += `<tr style="font-weight:700;background:var(--cream-dark)">
+    <td colspan="2">${currentLang==='ru'?'Итого':'Jami'}</td>
+    <td style="font-family:'IBM Plex Mono',monospace">${formatNum(total)}</td><td></td></tr></tbody></table>`;
+
+  document.getElementById('scheduleArea').innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════════
+//  WARRANTY CARDS
+// ════════════════════════════════════════════════════════
+function selectCard(input) {
+  document.querySelectorAll('.condition-card').forEach(c => c.classList.remove('selected'));
+  input.closest('.condition-card').classList.add('selected');
+  document.getElementById('customWarrantyBlock').style.display = input.value==='custom'?'block':'none';
+}
+
+// ════════════════════════════════════════════════════════
+//  SIDEBAR UPDATE
+// ════════════════════════════════════════════════════════
+function updateSidebar() {
+  document.getElementById('pvNum').textContent = document.getElementById('contractNum')?.value || '—';
+  const dateVal = document.getElementById('contractDate')?.value;
+  document.getElementById('pvDate').textContent = dateVal ? formatDate(dateVal) : '—';
+  const buyer = document.getElementById('buyerName')?.value;
+  document.getElementById('pvBuyer').textContent = buyer || '—';
+  const total = getGrandTotal();
+  const nds = getTotalNDS();
+  document.getElementById('pvTotal').textContent = formatNum(total);
+  document.getElementById('pvNDS').textContent = formatNum(nds) + ' сум';
+  document.getElementById('pvItems').textContent = document.querySelectorAll('#specBody tr').length;
+
+  // checklist
+  const b1 = document.getElementById('buyerName')?.value && document.getElementById('buyerINN')?.value;
+  const b2 = document.querySelectorAll('#specBody tr').length > 0 && total > 0;
+  const b3 = payType !== '';
+  const b4 = document.getElementById('deliveryDays')?.value;
+  setCheck('chk1', b1); setCheck('chk2', b2); setCheck('chk3', b3); setCheck('chk4', b4);
+}
+
+function setCheck(id, ok) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'check-item' + (ok ? ' ok' : '');
+  el.querySelector('.check-icon').textContent = ok ? '✓' : '○';
+}
+
+// ════════════════════════════════════════════════════════
+//  FORMAT HELPERS
+// ════════════════════════════════════════════════════════
+function formatNum(n) {
+  return Math.round(n).toLocaleString('ru-RU');
+}
+function numWords(n) {
+  // Simple Russian number-to-words for large numbers
+  const billions = Math.floor(n / 1_000_000_000);
+  const millions = Math.floor((n % 1_000_000_000) / 1_000_000);
+  const thousands = Math.floor((n % 1_000_000) / 1000);
+  const rest = Math.floor(n % 1000);
+  let s = '';
+  const ones = ['','один','два','три','четыре','пять','шесть','семь','восемь','девять'];
+  const tens = ['','десять','двадцать','тридцать','сорок','пятьдесят','шестьдесят','семьдесят','восемьдесят','девяносто'];
+  const hundreds_arr = ['','сто','двести','триста','четыреста','пятьсот','шестьсот','семьсот','восемьсот','девятьсот'];
+  const teens = ['десять','одиннадцать','двенадцать','тринадцать','четырнадцать','пятнадцать','шестнадцать','семнадцать','восемнадцать','девятнадцать'];
+  function small(num, fem) {
+    if (num === 0) return '';
+    let r = '';
+    const h = Math.floor(num/100), t = Math.floor((num%100)/10), o = num%10;
+    r += hundreds_arr[h] ? hundreds_arr[h]+' ' : '';
+    if (t === 1) { r += teens[o]+' '; return r; }
+    r += tens[t] ? tens[t]+' ' : '';
+    if (fem && o===1) r += 'одна ';
+    else if (fem && o===2) r += 'две ';
+    else r += ones[o] ? ones[o]+' ' : '';
+    return r;
+  }
+  if (billions) s += small(billions,false)+(billions===1?'миллиард ':billions<5?'миллиарда ':'миллиардов ');
+  if (millions) s += small(millions,false)+(millions===1?'миллион ':millions<5?'миллиона ':'миллионов ');
+  if (thousands) s += small(thousands,true)+(thousands%100>10&&thousands%100<20?'тысяч ':thousands%10===1?'тысяча ':thousands%10<5?'тысячи ':'тысяч ');
+  if (rest) s += small(rest,false);
+  if (!s) s = 'ноль ';
+  return s.trim();
+}
+function formatDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  return `«${day}» ${months[parseInt(m)-1]} ${y} г.`;
+}
+
+// ════════════════════════════════════════════════════════
+//  DOCX GENERATION
+// ════════════════════════════════════════════════════════
+async function generateDocx() {
+  const btn = document.getElementById('downloadBtn');
+  const status = document.getElementById('downloadStatus');
+  btn.disabled = true;
+  status.textContent = currentLang==='ru'?'⏳ Формирование договора...':'⏳ Shartnoma shakllantirilmoqda...';
+
+  try {
+    // Collect data
+    const num = document.getElementById('contractNum').value;
+    const dateVal = document.getElementById('contractDate').value;
+    const dateStr = formatDate(dateVal);
+    // Get buyer data from active tab (DB or manual)
+    const buyerData = getBuyerData();
+    if (!buyerData || !buyerData.name) throw new Error('Не заполнены реквизиты покупателя. Вернитесь на Шаг 1.');
+    const buyer    = buyerData.name;
+    const buyerDir = buyerData.director || '—';
+    const buyerINN = buyerData.inn      || '—';
+    const buyerAddr= buyerData.address  || '—';
+    const buyerAcc = buyerData.account  || '—';
+    const buyerBank= buyerData.bank     || '—';
+    const buyerMFO = buyerData.mfo      || '—';
+    const buyerOKED= buyerData.oked     || '—';
+    const buyerNDS = buyerData.nds      || '—';
+    // Save/update client in DB
+    if (currentBuyerTab === 'db' && selectedClient) {
+      const ci = clientsDB.findIndex(c => c.id === selectedClient.id);
+      if (ci !== -1) { clientsDB[ci].deals = (clientsDB[ci].deals||0) + 1; await saveClientsDB(); }
+    } else if (currentBuyerTab === 'manual' && buyerData.inn) {
+      const ex = clientsDB.find(c => c.inn === buyerData.inn);
+      if (ex) { ex.deals = (ex.deals||0) + 1; }
+      else { buyerData.id='c_'+Date.now(); buyerData.deals=1; buyerData.addedAt=new Date().toISOString(); clientsDB.push(buyerData); }
+      await saveClientsDB();
+    }
+    const country = document.getElementById('country').value;
+    const condition = document.getElementById('goodsCondition').value;
+    const delivDays = document.getElementById('deliveryDays').value;
+    const delivMethod = document.getElementById('deliveryMethod');
+    const delivMethodText = delivMethod.options[delivMethod.selectedIndex].getAttribute('data-ru') || delivMethod.value;
+    const penSup = document.getElementById('penaltySupplier').value;
+    const penBuy = document.getElementById('penaltyBuyer').value;
+    const maxPen = document.getElementById('maxPenalty').value;
+    const courtCity = document.getElementById('courtCity').value;
+    const copies = document.getElementById('copies').value;
+    const esfDays = document.getElementById('esfDays').value;
+
+    // Items
+    const rows = [];
+    document.querySelectorAll('#specBody tr').forEach(tr => {
+      const id = tr.id.replace('row_','');
+      const name = document.getElementById('rName_'+id)?.value||'';
+      const unit = document.getElementById('rUnit_'+id)?.value||'шт';
+      const qty = parseFloat(document.getElementById('rQty_'+id)?.value)||0;
+      const total = parseFloat(document.getElementById('rTotalNDS_'+id)?.value)||0;
+      const ndsSum = total * 12 / 112;
+      const base = total - ndsSum;
+      const price = qty > 0 ? base / qty : 0;
+      rows.push({name, unit, qty, price, nds:12, base, ndsSum, total});
+    });
+    await recordProductHistory(rows);
+
+    const grandTotal = rows.reduce((s,r) => s+r.total, 0);
+    const grandNDS = rows.reduce((s,r) => s+r.ndsSum, 0);
+    const grandTotalWords = numWords(Math.round(grandTotal)) + ' сум';
+
+    // Payment text
+    let paymentText = '';
+    if (payType === 'prepay100') {
+      const d = document.getElementById('payDays100').value;
+      paymentText = `Покупатель обязуется произвести оплату в размере 100% от суммы настоящего Договора путем зачисления денежных средств на расчетный счет Поставщика в течение ${d} банковских дней с момента подписания настоящего Договора.`;
+    } else if (payType === 'partial') {
+      const pp = document.getElementById('prepayPercent').value;
+      const pd = document.getElementById('prepayDays').value;
+      const rd = document.getElementById('remainDays').value;
+      paymentText = `Покупатель обязуется произвести предоплату в размере ${pp}% от суммы Договора в течение ${pd} банковских дней с момента подписания. Оставшиеся ${100-parseInt(pp)}% оплачиваются в течение ${rd} банковских дней после поставки Товара.`;
+    } else if (payType === 'installment') {
+      const dp = document.getElementById('downPayPercent').value;
+      const ic = document.getElementById('installCount').value;
+      paymentText = `Покупатель обязуется произвести оплату в рассрочку: первоначальный взнос ${dp}% при подписании Договора, оставшаяся сумма — равными долями в ${ic} платежа(ей) согласно графику платежей, являющемуся неотъемлемой частью настоящего Договора.`;
+    } else if (payType === 'postpay') {
+      const pd = document.getElementById('postpayDays').value;
+      paymentText = `Покупатель обязуется произвести оплату в полном объеме в течение ${pd} банковских дней с даты поставки Товара и подписания накладной счет-фактуры.`;
+    }
+
+    // Warranty text
+    const wType = document.querySelector('input[name="warranty"]:checked')?.value;
+    let warrantyText = '';
+    if (wType === 'spec_tech') warrantyText = 'Гарантийный период на спецтехнику составляет 1 (один) год или 2 000 (две тысячи) моточасов, в зависимости от того, что наступит ранее.';
+    else if (wType === 'self_prop') warrantyText = 'Гарантийный период на самоходную технику составляет 6 (шесть) месяцев, вне зависимости от пробега.';
+    else if (wType === 'custom') warrantyText = 'Гарантийный период: ' + (document.getElementById('customWarranty')?.value || '—');
+    else warrantyText = 'Гарантийные обязательства по настоящему Договору не предусмотрены.';
+
+    // Build docx content
+    const content = buildDocxContent({
+      num, dateStr, buyer, buyerDir, buyerINN, buyerAddr,
+      buyerAcc, buyerBank, buyerMFO, buyerOKED, buyerNDS,
+      country, condition, rows, grandTotal, grandNDS, grandTotalWords,
+      paymentText, payType, delivDays,
+      delivMethodText: delivMethod.options[delivMethod.selectedIndex].text,
+      penSup, penBuy, maxPen, courtCity, copies, esfDays, warrantyText
+    });
+
+    // Use docx library via CDN loading
+    await loadDocxAndGenerate(content, `Договор_купли-продажи_${num.replace('/','_')}.docx`);
+
+    status.textContent = currentLang==='ru'?'✅ Договор успешно сформирован и скачивается!':'✅ Shartnoma muvaffaqiyatli yaratildi va yuklanmoqda!';
+    // Log + save to dashboard
+    const _buyer = getBuyerData();
+    const _num   = document.getElementById('contractNum')?.value||'—';
+    const _amt   = getGrandTotal();
+    const _date  = document.getElementById('contractDate')?.value||new Date().toISOString().split('T')[0];
+    await writeLog('contract', `Договор №${_num} для «${_buyer?.name||'—'}», сумма: ${formatNum(_amt)} сум`);
+    await saveContractToDashboard(_num, _buyer?.name||'—', _amt, _date);
+    usersDB = await usersGet();
+    const _ui = usersDB.findIndex(u => u.id === currentUser?.id);
+    if (_ui !== -1) { usersDB[_ui].contracts = (usersDB[_ui].contracts||0) + 1; await usersSave(usersDB); }
+    status.style.color = 'var(--success)';
+  } catch(e) {
+    console.error(e);
+    const msg = (e instanceof Error) ? e.message : (typeof e === 'string' ? e : 'Не удалось сформировать договор. Проверьте интернет-соединение.');
+    status.textContent = '❌ Ошибка: ' + msg;
+    status.style.color = 'var(--error)';
+  }
+  btn.disabled = false;
+}
+
+function buildDocxContent(d) {
+  return d; // pass through, used inside loadDocxAndGenerate
+}
+
+async function loadDocxAndGenerate(d, filename) {
+  // Load docx from CDN
+  if (!window.docx) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/docx/9.0.3/docx.js';
+      s.onload = res;
+      s.onerror = () => rej(new Error('Не удалось загрузить библиотеку docx.js с CDN. Проверьте подключение к интернету.'));
+      document.head.appendChild(s);
+    });
+  }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+    AlignmentType, WidthType, BorderStyle, ShadingType, HeadingLevel,
+    VerticalAlign, PageNumber, Header, Footer } = window.docx;
+
+  const borderAll = {
+    top: {style:BorderStyle.SINGLE, size:1, color:'999999'},
+    bottom: {style:BorderStyle.SINGLE, size:1, color:'999999'},
+    left: {style:BorderStyle.SINGLE, size:1, color:'999999'},
+    right: {style:BorderStyle.SINGLE, size:1, color:'999999'}
+  };
+  const thShading = {fill:'0F1F3D', type:ShadingType.CLEAR};
+
+  function bold(text, size=22) {
+    return new TextRun({text, bold:true, size, font:'Times New Roman'});
+  }
+  function normal(text, size=22) {
+    return new TextRun({text, size, font:'Times New Roman'});
+  }
+  function P(children, opts={}) {
+    return new Paragraph({children: Array.isArray(children)?children:[new TextRun({text:children, size:22, font:'Times New Roman'})], spacing:{after:80}, ...opts});
+  }
+  function PBold(text, align) {
+    return new Paragraph({children:[bold(text,22)], spacing:{after:80}, alignment:align||AlignmentType.LEFT});
+  }
+  function head(text) {
+    return new Paragraph({children:[bold(text,24)], spacing:{before:160,after:80}, alignment:AlignmentType.LEFT});
+  }
+  function blank() { return new Paragraph({children:[normal('')], spacing:{after:60}}); }
+
+  // Spec table
+  const tableRows = [];
+  // Header row
+  tableRows.push(new TableRow({children:[
+    ['№','шт'].map((t,i)=>null).filter(x=>false)[0],
+    ...[
+      '№',
+      'Наименование товаров (работ, услуг)',
+      'Ед. изм.',
+      'Кол-во',
+      'Цена за единицу',
+      'Стоимость поставки',
+      'НДС ставка',
+      'НДС сумма',
+      'Стоимость с НДС'
+    ].map(h => new TableCell({
+      children:[new Paragraph({children:[new TextRun({text:h, bold:true, size:18, color:'FFFFFF', font:'Times New Roman'})], alignment:AlignmentType.CENTER, spacing:{before:40,after:40}})],
+      shading:thShading,
+      borders:borderAll,
+      margins:{top:40,bottom:40,left:60,right:60}
+    }))
+  ]}));
+
+  // Data rows
+  d.rows.forEach((r, i) => {
+    tableRows.push(new TableRow({children:[
+      new TableCell({children:[P(String(i+1), {alignment:AlignmentType.CENTER})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(r.name)], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(r.unit, {alignment:AlignmentType.CENTER})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(String(r.qty), {alignment:AlignmentType.CENTER})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(formatNum(r.price), {alignment:AlignmentType.RIGHT})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(formatNum(r.base), {alignment:AlignmentType.RIGHT})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(r.nds+'%', {alignment:AlignmentType.CENTER})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(formatNum(r.ndsSum), {alignment:AlignmentType.RIGHT})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+      new TableCell({children:[P(formatNum(r.total), {alignment:AlignmentType.RIGHT})], borders:borderAll, margins:{top:40,bottom:40,left:60,right:60}}),
+    ]}));
+  });
+
+  // Total row
+  tableRows.push(new TableRow({children:[
+    new TableCell({
+      children:[new Paragraph({children:[bold('Всего к оплате:',20)], alignment:AlignmentType.RIGHT, spacing:{before:40,after:40}})],
+      columnSpan:8,
+      borders:borderAll,
+      shading:{fill:'F0EDE4', type:ShadingType.CLEAR},
+      margins:{top:40,bottom:40,left:60,right:60}
+    }),
+    new TableCell({
+      children:[new Paragraph({children:[bold(formatNum(d.grandTotal),20)], alignment:AlignmentType.RIGHT, spacing:{before:40,after:40}})],
+      borders:borderAll,
+      shading:{fill:'F0EDE4', type:ShadingType.CLEAR},
+      margins:{top:40,bottom:40,left:60,right:60}
+    }),
+  ]}));
+
+  const specTable = new Table({
+    width:{size:9360, type:WidthType.DXA},
+    columnWidths:[360,2700,500,500,900,1000,600,700,1100],
+    rows:tableRows
+  });
+
+  // Requisites table
+  const reqTable = new Table({
+    width:{size:9360, type:WidthType.DXA},
+    columnWidths:[4600,160,4600],
+    rows:[new TableRow({children:[
+      new TableCell({
+        children:[
+          PBold('ПОСТАВЩИК'),
+          blank(),
+          P('ЧП «TEXNIKA ADVANS SERVIS»'),
+          P('100084, Республика Узбекистан, г.Ташкент,'),
+          P('Юнусабадский р-н, ул.Амира Темура д 95А'),
+          P('р/с: 2020 8000 9047 9930 6001'),
+          P('АИКБ "ИПАК ЙУЛИ" Мирзо-Улугбекский ф-л'),
+          P('МФО: 00421 | ИНН: 301301763'),
+          P('ОКЭД: 45191 | Код НДС: 326080001476'),
+        ],
+        borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}},
+        margins:{top:60,bottom:60,left:0,right:60}
+      }),
+      new TableCell({children:[blank()], borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}}}),
+      new TableCell({
+        children:[
+          PBold('ПОКУПАТЕЛЬ'),
+          blank(),
+          P(d.buyer),
+          P('Адрес: '+d.buyerAddr),
+          P('р/с: '+d.buyerAcc),
+          P('Банк: '+d.buyerBank),
+          P('МФО: '+d.buyerMFO+' | ИНН: '+d.buyerINN),
+          P('ОКЭД: '+d.buyerOKED+(d.buyerNDS&&d.buyerNDS!=='—'?' | Код НДС: '+d.buyerNDS:'')),
+        ],
+        borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}},
+        margins:{top:60,bottom:60,left:60,right:0}
+      })
+    ]})]
+  });
+
+  // Signatures table
+  const sigTable = new Table({
+    width:{size:9360, type:WidthType.DXA},
+    columnWidths:[4600,160,4600],
+    rows:[
+      new TableRow({children:[
+        new TableCell({children:[PBold('ПОСТАВЩИК'), blank(), P('Директор ЧП «TEXNIKA ADVANS SERVIS»'), blank(), blank(), P('_________________ / Мираюбов М.М. /'), blank(), P('М.П.')], borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}}, margins:{top:60,bottom:60,left:0,right:60}}),
+        new TableCell({children:[blank()], borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}}}),
+        new TableCell({children:[PBold('ПОКУПАТЕЛЬ'), blank(), P('Директор '+d.buyer), blank(), blank(), P('_________________ / '+d.buyerDir+' /'), blank(), P('М.П.')], borders:{top:{style:BorderStyle.NONE},bottom:{style:BorderStyle.NONE},left:{style:BorderStyle.NONE},right:{style:BorderStyle.NONE}}, margins:{top:60,bottom:60,left:60,right:0}})
+      ]}),
+    ]
+  });
+
+  const doc = new Document({
+    styles:{
+      default:{
+        document:{run:{font:'Times New Roman', size:22}},
+        heading1:{run:{bold:true, size:24, font:'Times New Roman'}}
+      }
+    },
+    sections:[{
+      properties:{
+        page:{
+          size:{width:11906, height:16838},
+          margin:{top:1134, right:850, bottom:1134, left:1701}
+        }
+      },
+      headers:{default:new Header({children:[
+        new Paragraph({children:[
+          new TextRun({text:'Договор купли-продажи № '+d.num+' от '+d.dateStr, size:18, font:'Times New Roman', color:'888888'})
+        ], alignment:AlignmentType.CENTER})
+      ]})},
+      footers:{default:new Footer({children:[
+        new Paragraph({children:[
+          new TextRun({text:'Стр. ', size:18, font:'Times New Roman', color:'888888'}),
+          new TextRun({children:[PageNumber.CURRENT], size:18, font:'Times New Roman', color:'888888'}),
+          new TextRun({text:' из ', size:18, font:'Times New Roman', color:'888888'}),
+          new TextRun({children:[PageNumber.TOTAL_PAGES], size:18, font:'Times New Roman', color:'888888'}),
+        ], alignment:AlignmentType.CENTER})
+      ]})},
+      children:[
+        // Title
+        new Paragraph({children:[bold('ДОГОВОР КУПЛИ-ПРОДАЖИ № '+d.num, 28)], alignment:AlignmentType.CENTER, spacing:{before:0,after:100}}),
+        new Paragraph({children:[
+          new TextRun({text:'г. Ташкент    ', bold:true, size:22, font:'Times New Roman'}),
+          new TextRun({text:d.dateStr, bold:true, size:22, font:'Times New Roman'}),
+        ], spacing:{after:200}}),
+
+        // Preamble
+        P([
+          bold('ЧП «TEXNIKA ADVANS SERVIS»'),
+          normal(', именуемое в дальнейшем «'),
+          bold('Продавец'),
+          normal('», в лице Директора '),
+          bold('Мираюбова М.М.'),
+          normal(', действующего на основании Устава, с одной стороны, и '),
+          bold(d.buyer),
+          normal(', именуемое в дальнейшем «'),
+          bold('Покупатель'),
+          normal('», в лице '),
+          bold(d.buyerDir),
+          normal(', действующего на основании Устава, с другой стороны, вместе именуемые «Стороны», заключили настоящий Договор о нижеследующем:'),
+        ]),
+
+        blank(),
+        head('1. ПРЕДМЕТ ДОГОВОРА'),
+        P('1.1. Продавец обязуется передать в собственность Покупателю, а Покупатель обязуется принять и оплатить товары (далее — «Товар») в количестве, ассортименте и по ценам согласно Спецификации (Раздел 1.2 настоящего Договора), являющейся неотъемлемой частью настоящего Договора.'),
+        blank(),
+        P('1.2. Спецификация Товара:'),
+        blank(),
+        specTable,
+        blank(),
+        P('Страна происхождения Товара: '+d.country+'.'),
+        P(d.condition==='new'?'Товар должен быть безусловно новым, не бывшим в эксплуатации.':'Товар бывший в употреблении, состояние согласовано сторонами.'),
+
+        blank(),
+        head('2. ЦЕНА И ОБЩАЯ СУММА ДОГОВОРА'),
+        P([bold('2.1. '), normal('Общая сумма Договора составляет '), bold(formatNum(d.grandTotal)+',00'), normal(' ('), bold(d.grandTotalWords), normal(') сум, в том числе НДС: '), bold(formatNum(d.grandNDS)+' сум'), normal('.')]),
+        P('2.2. В случае изменения таможенного законодательства, ставок таможенных платежей, сборов при импорте Товара, цены на Товар могут быть изменены Сторонами путем заключения дополнительного соглашения к настоящему Договору.'),
+        P('2.3. После осуществления оплаты стоимость Товара является окончательной и не подлежит дальнейшему изменению при условии соблюдения Покупателем сроков оплаты по настоящему Договору.'),
+        P('2.4. В случае неосуществления Покупателем оплаты в предусмотренные сроки Продавец вправе в одностороннем порядке увеличить стоимость Товара, продлить сроки поставки, а также расторгнуть Договор.'),
+
+        blank(),
+        head('3. ПОРЯДОК РАСЧЁТОВ'),
+        P([bold('3.1. '), normal(d.paymentText)]),
+        P('3.2. Расчеты по настоящему Договору производятся в безналичном порядке.'),
+        P('3.3. Оплата производится в валюте Республики Узбекистан — сум.'),
+        P(`3.4. Продавец обязуется выставить Покупателю электронную счёт-фактуру (ЭСФ) через систему my.soliq.uz в течение ${d.esfDays} (трёх) рабочих дней с даты совершения оборота в соответствии со статьёй 222 Налогового кодекса Республики Узбекистан.`),
+
+        blank(),
+        head('4. КАЧЕСТВО И КОМПЛЕКТНОСТЬ ТОВАРА'),
+        P('4.1. Качество и комплектность поставляемого Товара должны соответствовать действующим стандартам, техническим условиям завода-изготовителя, признанным в Республике Узбекистан, сертификату и другим обязательным документам.'),
+        P('4.2. Тара и упаковка должны соответствовать установленным требованиям и обеспечивать сохранность Товаров при транспортировке и хранении.'),
+
+        blank(),
+        head('5. УСЛОВИЯ ГАРАНТИИ'),
+        P([bold('5.1. '), normal(d.warrantyText)]),
+        P('5.2. Гарантийные обязательства начисляются с даты подписания Акта приёма-передачи Товара при условии соблюдения Покупателем правил эксплуатации, предусмотренных заводом-изготовителем.'),
+        P('5.3. Гарантийное и сервисное обслуживание осуществляется ЧП «TEXNIKA ADVANS SERVIS» (адрес: Республика Узбекистан, г. Ташкент, ул. Амира Темура 95А).'),
+
+        blank(),
+        head('6. УСЛОВИЯ И ПОРЯДОК ПОСТАВКИ'),
+        P(`6.1. Поставка Товара производится на условиях: ${d.delivMethodText} в течение ${d.delivDays} банковских дней с момента поступления на расчётный счёт Продавца полной суммы оплаты согласно п. 3.1 настоящего Договора.`),
+        P('6.2. Поставка Товара производится одновременно или отдельными партиями по мере готовности к отпуску со склада Продавца.'),
+        P('6.3. Сроки поставки могут продлеваться на время национальных/государственных праздников, форс-мажорных обстоятельств, а также на время решения вопросов, связанных с изменениями таможенного законодательства при импорте Товара.'),
+
+        blank(),
+        head('7. СДАЧА-ПРИЁМКА ТОВАРА'),
+        P('7.1. Товар считается принятым с момента его передачи Покупателю и подписания накладной счёт-фактуры.'),
+        P('7.2. Приём-передача Товара по количеству и качеству производится представителем Покупателя на складе Продавца.'),
+        P('7.3. Товар отпускается уполномоченному представителю Покупателя только по предъявлению доверенности установленного образца с оформлением накладной счёт-фактуры. Право собственности на переданный Товар сохраняется за Продавцом до 100% оплаты Покупателем.'),
+        P('7.4. Одновременно с передачей Товара Продавец обязан передать Покупателю: технический паспорт, сертификат качества, инструкцию по эксплуатации и иные документы.'),
+        P('7.5. Соответствие Товара условиям Договора подтверждается подписанием Сторонами Акта приёма-передачи. В случае выявления недостатков Продавец обязан устранить их путём ремонта или замены дефектных частей в срок, согласованный Сторонами, но не более 35 (тридцати пяти) календарных дней.'),
+        P('7.6. После подписания Акта приёма-передачи Товар возврату не подлежит.'),
+
+        blank(),
+        head('8. ОТВЕТСТВЕННОСТЬ СТОРОН'),
+        P(`8.1. В случае задержки поставки Товара Продавец уплачивает Покупателю пеню в размере ${d.penSup}% от стоимости недопоставленного Товара за каждый день просрочки, но не более ${d.maxPen}% от стоимости.`),
+        P(`8.2. При несвоевременной оплате поставленного Товара Покупатель уплачивает Продавцу пеню в размере ${d.penBuy}% суммы просроченного платежа за каждый день просрочки, но не более ${d.maxPen}% суммы просроченного платежа.`),
+        P('8.3. За неосновательный отказ от оплаты Товара Покупатель уплачивает Продавцу штраф в размере 20% суммы, от уплаты которой он отказался.'),
+        P('8.4. За не выборку Товара Покупатель уплачивает Продавцу штраф в размере 5% стоимости невыбранного Товара.'),
+        P('8.5. Уплата неустойки не освобождает сторону от исполнения условий Договора и возмещения убытков. Меры ответственности, не предусмотренные настоящим Договором, применяются в соответствии с Гражданским Кодексом Республики Узбекистан и Законом РУз №670-I от 29.08.1998 г.'),
+
+        blank(),
+        head('9. ФОРС-МАЖОР'),
+        P('9.1. Стороны освобождаются от ответственности за частичное или полное неисполнение обязательств, если оно явилось следствием обстоятельств непреодолимой силы: пожар, стихийные бедствия, военные действия, блокады, запрет экспорта, акты государственных органов или иные обстоятельства, возникшие после подписания Договора.'),
+        P('9.2. Сторона, для которой наступила невозможность исполнения, не позднее 10 дней письменно извещает другую Сторону о наступлении/прекращении форс-мажорных обстоятельств.'),
+        P('9.3. Если обстоятельства, указанные в п. 9.1, продолжают действовать более 1 (одного) месяца, Стороны вправе расторгнуть настоящий Договор в одностороннем порядке.'),
+
+        blank(),
+        head('10. ПОРЯДОК РАЗРЕШЕНИЯ СПОРОВ'),
+        P('10.1. Споры и разногласия разрешаются путём переговоров между Сторонами.'),
+        P('10.2. Все претензии по настоящему Договору должны быть рассмотрены в течение 30 (тридцати) дней с момента их получения.'),
+        P(`10.3. В случае невозможности разрешения споров путём переговоров Стороны передают их на рассмотрение в Экономический суд г. ${d.courtCity}.`),
+
+        blank(),
+        head('11. СРОК ДЕЙСТВИЯ И РАСТОРЖЕНИЕ'),
+        P('11.1. Настоящий Договор вступает в силу с момента подписания Сторонами и действует до полного исполнения обязательств.'),
+        P('11.2. В Договор могут быть внесены изменения и дополнения по обоюдному согласию Сторон путём составления дополнительного соглашения.'),
+        P('11.3. Все изменения, дополнения и приложения действительны только в письменной форме, подписанные уполномоченными представителями Сторон.'),
+
+        blank(),
+        head('12. ОСОБЫЕ УСЛОВИЯ'),
+        P('12.1. После подписания настоящего Договора все предшествующие устные и письменные договорённости теряют юридическую силу.'),
+        P('12.2. Ни одна из Сторон не вправе передавать свои права и обязательства третьим лицам без письменного согласия другой Стороны.'),
+        P('12.3. Покупатель на момент заключения Договора предоставляет Продавцу: копию свидетельства о государственной регистрации, копию паспорта руководителя, копию договора аренды помещения (при необходимости).'),
+        P('12.4. При изменении платёжных реквизитов или юридического адреса Стороны немедленно в письменной форме извещают друг друга.'),
+        P(`12.5. Настоящий Договор составлен на русском языке в ${d.copies} (${d.copies==='3'?'трёх':'двух'}) экземплярах, имеющих одинаковую юридическую силу.`),
+        P('12.6. По вопросам, не предусмотренным настоящим Договором, Стороны руководствуются Гражданским кодексом Республики Узбекистан и Законом РУз №670-I от 29.08.1998 г.'),
+
+        blank(),
+        head('13. ЮРИДИЧЕСКИЕ АДРЕСА И БАНКОВСКИЕ РЕКВИЗИТЫ СТОРОН'),
+        blank(),
+        reqTable,
+        blank(),
+        head('14. ПОДПИСИ И ПЕЧАТИ СТОРОН'),
+        blank(),
+        sigTable,
+      ]
+    }]
+  });
+
+  const buffer = await Packer.toBuffer(doc);
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  saveAs(blob, filename);
+}
+
+// ════════════════════════════════════════════════════════
+//  MISC
+// ════════════════════════════════════════════════════════
+function resetForm() {
+  if (!confirm(currentLang==='ru'?'Начать новый договор? Все данные будут очищены.':'Yangi shartnoma boshlash? Barcha ma\'lumotlar tozalanadi.')) return;
+  location.reload();
+}
+
+// Init
+
+// ═══════════════════════════════════════════════════════════════
+//  AUTH & USER MANAGEMENT
+//  Passwords stored as SHA-256 hashes — never plain text
+// ═══════════════════════════════════════════════════════════════
+const USERS_KEY   = 'tas_users_v1';
+const LOGS_KEY    = 'tas_logs_v1';
+const SESSION_KEY = 'tas_session_v1';
+
+let currentUser = null;   // { id, name, login, role }
+let usersDB     = [];
+let logsDB      = [];
+
+// ── SHA-256 via SubtleCrypto (built into browsers) ────────────
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256',
+    new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── Storage (shared=true so all users share same DB) ─────────
+async function usersGet()    { try { const r=await stGet(USERS_KEY);    return r&&r.value?JSON.parse(r.value):[]; } catch(e){return[];} }
+async function usersSave(d)  { await stSet(USERS_KEY, d); }
+async function logsGet()     { try { const r=await stGet(LOGS_KEY);     return r&&r.value?JSON.parse(r.value):[]; } catch(e){return[];} }
+async function logsSave(d)   { await stSet(LOGS_KEY, d); }
+
+// ── Session (personal=false so it's per-browser) ─────────────
+async function sessionGet() {
+  try {
+    // personal storage (shared=false)
+    const r = await window.storage.get(SESSION_KEY, false);
+    return r && r.value ? JSON.parse(r.value) : null;
+  } catch(e) { return null; }
+}
+async function sessionSave(data) {
+  try { await window.storage.set(SESSION_KEY, JSON.stringify(data), false); } catch(e) {}
+}
+async function sessionClear() {
+  try { await window.storage.delete(SESSION_KEY, false); } catch(e) {}
+}
+
+// ── Logging ───────────────────────────────────────────────────
+async function writeLog(action, details = '') {
+  const entry = {
+    ts:      new Date().toISOString(),
+    userId:  currentUser?.id   || 'unknown',
+    name:    currentUser?.name || 'Неизвестно',
+    login:   currentUser?.login|| '',
+    role:    currentUser?.role || '',
+    action,   // 'login' | 'logout' | 'contract' | 'fail' | 'user_add' | 'user_del'
+    details,
+    ua:      navigator.userAgent.slice(0, 80)
+  };
+  logsDB = await logsGet();
+  logsDB.unshift(entry);                    // newest first
+  if (logsDB.length > 2000) logsDB = logsDB.slice(0, 2000);
+  await logsSave(logsDB);
+}
+
+// ── Default admin setup (first run) ──────────────────────────
+async function ensureDefaultAdmin() {
+  usersDB = await usersGet();
+  if (usersDB.length === 0) {
+    // Create default admin: login=admin, password=admin123
+    const hash = await sha256('admin123');
+    usersDB = [{
+      id:       'u_default_admin',
+      name:     'Администратор',
+      login:    'admin',
+      passHash: hash,
+      role:     'admin',
+      createdAt: new Date().toISOString(),
+      lastLogin: null,
+      contracts: 0
+    }];
+    await usersSave(usersDB);
+  }
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────
+async function doLogin() {
+  const login = document.getElementById('authLogin').value.trim();
+  const pass  = document.getElementById('authPass').value;
+  const errEl = document.getElementById('authError');
+  errEl.style.display = 'none';
+
+  if (!login || !pass) {
+    errEl.textContent = 'Введите логин и пароль';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  usersDB = await usersGet();
+  const hash = await sha256(pass);
+  const user = usersDB.find(u => u.login === login && u.passHash === hash);
+
+  if (!user) {
+    errEl.textContent = '❌ Неверный логин или пароль';
+    errEl.style.display = 'block';
+    document.getElementById('authPass').value = '';
+    // Log failed attempt (without currentUser)
+    const failEntry = {
+      ts: new Date().toISOString(), userId:'', name:'', login, role:'',
+      action:'fail', details:`Попытка входа: логин «${login}»`,
+      ua: navigator.userAgent.slice(0,80)
+    };
+    logsDB = await logsGet(); logsDB.unshift(failEntry);
+    if(logsDB.length>2000) logsDB=logsDB.slice(0,2000);
+    await logsSave(logsDB);
+    return;
+  }
+
+  // Success
+  currentUser = { id: user.id, name: user.name, login: user.login, role: user.role };
+  await sessionSave(currentUser);
+
+  // Update lastLogin + contracts count in usersDB
+  const idx = usersDB.findIndex(u => u.id === user.id);
+  if (idx !== -1) { usersDB[idx].lastLogin = new Date().toISOString(); }
+  await usersSave(usersDB);
+
+  await writeLog('login', 'Успешный вход в систему');
+  showApp();
+}
+
+// ── LOGOUT ────────────────────────────────────────────────────
+async function doLogout() {
+  if (!confirm('Выйти из системы?')) return;
+  await writeLog('logout', 'Выход из системы');
+  currentUser = null;
+  await sessionClear();
+  location.reload();
+}
+
+// ── SHOW APP after auth ───────────────────────────────────────
+function showApp() {
+  document.getElementById('authScreen').style.display = 'none';
+  // Update header badge
+  document.getElementById('userBadge').style.display   = 'flex';
+  document.getElementById('userBadgeName').textContent = currentUser?.name || '—';
+  document.getElementById('userBadgeRole').textContent =
+    currentUser?.role === 'admin' ? '👑 Администратор' : '💼 Менеджер';
+  document.getElementById('logoutBtn').style.display   = 'inline-flex';
+  if (currentUser.role === 'admin') {
+    document.getElementById('adminNavBtn').style.display = 'inline-flex';
+  }
+}
+
+// ── ADMIN PANEL ───────────────────────────────────────────────
+function openAdmin() {
+  if (currentUser?.role !== 'admin') return;
+  document.getElementById('adminOverlay').classList.add('open');
+  renderUsersTable(); renderLogs();
+}
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+  closeUserForm();
+}
+document.addEventListener('click', e => {
+  if (e.target && e.target.id === 'adminOverlay') closeAdmin();
+});
+
+function switchAdminTab(tab, btn) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('adminPanel_' + tab).classList.add('active');
+  if (tab === 'logs') renderLogs();
+  if (tab === 'users') renderUsersTable();
+}
+
+// ── USERS TABLE ───────────────────────────────────────────────
+async function renderUsersTable() {
+  usersDB = await usersGet();
+  const tbody = document.getElementById('usersTableBody');
+  if (!tbody) return;
+  document.getElementById('usersCount').textContent = `Всего пользователей: ${usersDB.length}`;
+  tbody.innerHTML = usersDB.map((u, i) => `<tr>
+    <td style="color:var(--text-muted);font-size:11px">${i+1}</td>
+    <td style="font-weight:600;color:var(--navy)">${esc(u.name)}</td>
+    <td style="font-family:'IBM Plex Mono',monospace;font-size:12px">${esc(u.login)}</td>
+    <td><span class="role-badge role-${u.role}">${u.role === 'admin' ? '👑 Админ' : '💼 Менеджер'}</span></td>
+    <td style="font-size:11px;color:var(--text-muted)">${u.lastLogin ? new Date(u.lastLogin).toLocaleString('ru-RU') : 'Никогда'}</td>
+    <td style="text-align:center">${u.contracts||0}</td>
+    <td><div style="display:flex;gap:4px">
+      <button class="btn btn-secondary btn-sm" onclick="editUser('${u.id}')">✏️</button>
+      <button class="btn btn-secondary btn-sm" onclick="resetUserPass('${u.id}')">🔑</button>
+      ${u.id !== currentUser?.id ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.id}')">🗑</button>` : '<span style="font-size:11px;color:var(--text-muted);padding:4px">вы</span>'}
+    </div></td>
+  </tr>`).join('');
+}
+
+function openUserForm(user) {
+  document.getElementById('userFormCard').classList.add('open');
+  document.getElementById('userFormTitle').textContent = user ? '✏️ Редактировать' : '➕ Новый пользователь';
+  document.getElementById('uf_editId').value  = user ? user.id : '';
+  document.getElementById('uf_name').value    = user ? user.name  : '';
+  document.getElementById('uf_login').value   = user ? user.login : '';
+  document.getElementById('uf_pass').value    = '';
+  document.getElementById('uf_pass').placeholder = user ? 'Оставьте пустым — пароль не изменится' : 'Минимум 4 символа';
+  document.getElementById('uf_role').value    = user ? user.role  : 'manager';
+}
+function closeUserForm() { document.getElementById('userFormCard').classList.remove('open'); }
+
+function editUser(id) {
+  const u = usersDB.find(x => x.id === id);
+  if (u) openUserForm(u);
+}
+
+async function saveUser() {
+  const name  = document.getElementById('uf_name').value.trim();
+  const login = document.getElementById('uf_login').value.trim().toLowerCase();
+  const pass  = document.getElementById('uf_pass').value;
+  const role  = document.getElementById('uf_role').value;
+  const editId= document.getElementById('uf_editId').value;
+
+  if (!name || !login) { alert('Заполните имя и логин'); return; }
+  if (!editId && pass.length < 4) { alert('Пароль должен быть минимум 4 символа'); return; }
+  if (pass && pass.length < 4)    { alert('Пароль должен быть минимум 4 символа'); return; }
+
+  usersDB = await usersGet();
+  const loginTaken = usersDB.find(u => u.login === login && u.id !== editId);
+  if (loginTaken) { alert(`Логин «${login}» уже занят`); return; }
+
+  if (editId) {
+    const idx = usersDB.findIndex(u => u.id === editId);
+    if (idx !== -1) {
+      usersDB[idx].name  = name;
+      usersDB[idx].login = login;
+      usersDB[idx].role  = role;
+      if (pass) usersDB[idx].passHash = await sha256(pass);
+    }
+    await writeLog('user_edit', `Отредактирован пользователь: ${name} (${login})`);
+  } else {
+    const hash = await sha256(pass);
+    usersDB.push({ id:'u_'+Date.now(), name, login, passHash:hash, role,
+      createdAt:new Date().toISOString(), lastLogin:null, contracts:0 });
+    await writeLog('user_add', `Добавлен пользователь: ${name} (${login}, ${role})`);
+  }
+
+  await usersSave(usersDB);
+  renderUsersTable();
+  closeUserForm();
+}
+
+async function deleteUser(id) {
+  const u = usersDB.find(x => x.id === id);
+  if (!u) return;
+  if (!confirm(`Удалить пользователя «${u.name}»? Это действие нельзя отменить.`)) return;
+  usersDB = usersDB.filter(x => x.id !== id);
+  await usersSave(usersDB);
+  await writeLog('user_del', `Удалён пользователь: ${u.name} (${u.login})`);
+  renderUsersTable();
+}
+
+async function resetUserPass(id) {
+  const u = usersDB.find(x => x.id === id);
+  if (!u) return;
+  const newPass = prompt(`Новый пароль для «${u.name}»:\n(минимум 4 символа)`);
+  if (!newPass || newPass.length < 4) { if(newPass !== null) alert('Пароль слишком короткий'); return; }
+  u.passHash = await sha256(newPass);
+  await usersSave(usersDB);
+  await writeLog('user_edit', `Сброс пароля: ${u.name} (${u.login})`);
+  alert(`✅ Пароль для «${u.name}» успешно изменён`);
+}
+
+// ── LOGS TABLE ────────────────────────────────────────────────
+async function renderLogs() {
+  logsDB = await logsGet();
+  const q   = (document.getElementById('logSearchInp')?.value||'').toLowerCase();
+  const act = document.getElementById('logFilterAction')?.value||'';
+  let list  = logsDB;
+  if (q)   list = list.filter(l => (l.name+l.login+l.details+l.action).toLowerCase().includes(q));
+  if (act) list = list.filter(l => l.action === act || (act==='contract'&&l.action==='contract'));
+
+  document.getElementById('logsCount').textContent = `Записей: ${list.length} из ${logsDB.length}`;
+  const tbody = document.getElementById('logsTableBody');
+  if (!tbody) return;
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-muted)">Записей нет</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(l => {
+    const dt = new Date(l.ts);
+    const dateStr = dt.toLocaleDateString('ru-RU') + ' ' + dt.toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit'});
+    const actionLabel = {login:'🔑 Вход',logout:'🚪 Выход',contract:'📄 Договор',fail:'⚠️ Ошибка входа',user_add:'➕ Добавлен польз.',user_del:'🗑 Удалён польз.',user_edit:'✏️ Изм. польз.'}[l.action] || l.action;
+    const cls = {login:'log-action-login',logout:'log-action-logout',contract:'log-action-contract',fail:'log-action-fail'}[l.action]||'';
+    return `<tr>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;white-space:nowrap;color:var(--text-muted)">${dateStr}</td>
+      <td><strong>${esc(l.name)}</strong><br><span style="font-size:10px;color:var(--text-muted)">${esc(l.login)}</span></td>
+      <td class="${cls}">${actionLabel}</td>
+      <td style="font-size:12px">${esc(l.details)}</td>
+      <td style="font-size:10px;color:var(--text-muted);max-width:120px;overflow:hidden;text-overflow:ellipsis" title="${esc(l.ua)}">${esc(l.ua.slice(0,40))}…</td>
+    </tr>`;
+  }).join('');
+}
+
+function exportLogs() {
+  const rows = [['Дата/Время','Пользователь','Логин','Роль','Действие','Детали']];
+  logsDB.forEach(l => rows.push([
+    new Date(l.ts).toLocaleString('ru-RU'),
+    l.name, l.login, l.role, l.action, l.details
+  ]));
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  saveAs(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'}),
+    'TAS_log_' + new Date().toISOString().split('T')[0] + '.csv');
+}
+
+async function clearLogs() {
+  if (!confirm('Очистить весь журнал действий? Это нельзя отменить.')) return;
+  logsDB = [];
+  await logsSave(logsDB);
+  await writeLog('system', 'Журнал очищен администратором');
+  renderLogs();
+}
+
+// ── AUTH INIT ─────────────────────────────────────────────────
+async function initAuth() {
+  await ensureDefaultAdmin();
+  // Try restore session
+  const session = await sessionGet();
+  if (session && session.id) {
+    usersDB = await usersGet();
+    const user = usersDB.find(u => u.id === session.id);
+    if (user) {
+      currentUser = { id:user.id, name:user.name, login:user.login, role:user.role };
+      showApp();
+      await writeLog('login', 'Восстановлена сессия (автовход)');
+      return;
+    }
+  }
+  // Show login screen
+  document.getElementById('authScreen').style.display = 'flex';
+  setTimeout(() => document.getElementById('authLogin').focus(), 100);
+}
+
+
+
+// ═══════════════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+const CONTRACTS_KEY = 'tas_contracts_v1';
+const TASKS_KEY     = 'tas_tasks_v1';
+const CALLS_KEY     = 'tas_calls_v1';
+
+let contractsDB = [];
+let tasksDB     = [];
+let callsDB     = [];
+
+// ── Storage ──────────────────────────────────────────────────
+async function contractsGet()   { try{const r=await stGet(CONTRACTS_KEY);return r&&r.value?JSON.parse(r.value):[];}catch(e){return[];} }
+async function contractsSave(d) { await stSet(CONTRACTS_KEY,d); }
+async function tasksGet()       { try{const r=await stGet(TASKS_KEY);return r&&r.value?JSON.parse(r.value):[];}catch(e){return[];} }
+async function tasksSave(d)     { await stSet(TASKS_KEY,d); }
+async function callsGet()       { try{const r=await stGet(CALLS_KEY);return r&&r.value?JSON.parse(r.value):[];}catch(e){return[];} }
+async function callsSave(d)     { await stSet(CALLS_KEY,d); }
+
+// ── Open / Close ─────────────────────────────────────────────
+async function openDashboard() {
+  document.getElementById('dashOverlay').classList.add('open');
+  [contractsDB, tasksDB, callsDB] = await Promise.all([contractsGet(), tasksGet(), callsGet()]);
+  // Populate manager filter (admin only)
+  const isAdmin = currentUser?.role === 'admin';
+  const mf = document.getElementById('dashManagerFilter');
+  if (isAdmin && mf) {
+    mf.style.display = 'block';
+    usersDB = await usersGet();
+    mf.innerHTML = '<option value="">Все менеджеры</option>' +
+      usersDB.filter(u=>u.role==='manager'||u.role==='admin')
+             .map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
+  }
+  renderDashboard();
+}
+function closeDashboard() { document.getElementById('dashOverlay').classList.remove('open'); }
+
+// ── Render all ───────────────────────────────────────────────
+function renderDashboard() {
+  renderStats();
+  renderContractsTable();
+  renderTasks();
+  renderCalls();
+  renderActivityChart();
+}
+
+// ── Filter by current user or admin selection ─────────────────
+function getFilteredContracts() {
+  const isAdmin = currentUser?.role === 'admin';
+  const mf = document.getElementById('dashManagerFilter');
+  const filterUser = isAdmin && mf ? mf.value : '';
+  return contractsDB.filter(c =>
+    filterUser ? c.managerId === filterUser :
+    isAdmin    ? true :
+    c.managerId === currentUser?.id
+  );
+}
+function getFilteredTasks() {
+  const isAdmin = currentUser?.role === 'admin';
+  const mf = document.getElementById('dashManagerFilter');
+  const filterUser = isAdmin && mf ? mf.value : '';
+  return tasksDB.filter(t =>
+    filterUser ? t.assignedTo === filterUser :
+    isAdmin    ? true :
+    t.assignedTo === currentUser?.id || t.createdBy === currentUser?.id
+  );
+}
+function getFilteredCalls() {
+  const isAdmin = currentUser?.role === 'admin';
+  const mf = document.getElementById('dashManagerFilter');
+  const filterUser = isAdmin && mf ? mf.value : '';
+  return callsDB.filter(c =>
+    filterUser ? c.assignedTo === filterUser :
+    isAdmin    ? true :
+    c.assignedTo === currentUser?.id
+  );
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function renderStats() {
+  const list = getFilteredContracts();
+  const total    = list.length;
+  const totalSum = list.reduce((s,c)=>s+(c.amount||0),0);
+  const paid     = list.filter(c=>c.status==='paid'||c.status==='shipped'||c.status==='closed');
+  const paidSum  = paid.reduce((s,c)=>s+(c.amount||0),0);
+  const overdue  = list.filter(c=>c.status==='overdue');
+  const odSum    = overdue.reduce((s,c)=>s+(c.amount||0),0);
+  const pending  = list.filter(c=>c.status==='new'||c.status==='partial');
+  const pdSum    = pending.reduce((s,c)=>s+(c.amount||0),0);
+
+  document.getElementById('st_total').textContent     = total;
+  document.getElementById('st_total_sum').textContent = formatNum(totalSum) + ' сум';
+  document.getElementById('st_paid').textContent      = paid.length;
+  document.getElementById('st_paid_sum').textContent  = formatNum(paidSum) + ' сум';
+  document.getElementById('st_overdue').textContent   = overdue.length;
+  document.getElementById('st_overdue_sum').textContent = formatNum(odSum) + ' сум';
+  document.getElementById('st_pending').textContent   = pending.length;
+  document.getElementById('st_pending_sum').textContent = formatNum(pdSum) + ' сум';
+
+  // Flash red if overdue
+  const odCard = document.querySelector('.stat-card.red');
+  if (odCard) odCard.style.background = overdue.length > 0 ? '#fff5f5' : '#fff';
+}
+
+// ── CONTRACTS TABLE ───────────────────────────────────────────
+function renderContractsTable() {
+  const filterStatus = document.getElementById('ctFilterStatus')?.value || '';
+  let list = getFilteredContracts();
+  if (filterStatus) list = list.filter(c => c.status === filterStatus);
+  // Sort: overdue first, then by date desc
+  list.sort((a,b) => {
+    if (a.status==='overdue' && b.status!=='overdue') return -1;
+    if (b.status==='overdue' && a.status!=='overdue') return 1;
+    return new Date(b.createdAt||0) - new Date(a.createdAt||0);
+  });
+
+  const tbody = document.getElementById('contractsTableBody');
+  if (!tbody) return;
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted)">Нет договоров${filterStatus?' с выбранным статусом':''}</td></tr>`;
+    return;
+  }
+
+  const STATUS_LABELS = {
+    new:'🆕 Новый', paid:'✅ Оплачен', shipped:'📦 Отгружен',
+    overdue:'🔴 Просрочен', partial:'💛 Частичн.', closed:'✔️ Закрыт'
+  };
+  const STATUS_CLS = {
+    new:'sb-new', paid:'sb-paid', shipped:'sb-shipped',
+    overdue:'sb-overdue', partial:'sb-partial', closed:'sb-closed'
+  };
+
+  tbody.innerHTML = list.map(c => `<tr>
+    <td>
+      <div class="cn">${esc(c.num||'—')}</div>
+      <div class="buyer">${c.date ? new Date(c.date).toLocaleDateString('ru-RU') : '—'}</div>
+    </td>
+    <td>
+      <div style="font-size:12.5px;font-weight:500;color:var(--text)">${esc(c.buyer||'—')}</div>
+      ${c.managerName ? `<div class="buyer">👤 ${esc(c.managerName)}</div>` : ''}
+    </td>
+    <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:nowrap">${formatNum(c.amount||0)} сум</td>
+    <td><span class="sb ${STATUS_CLS[c.status]||'sb-new'}">${STATUS_LABELS[c.status]||c.status}</span>
+      ${c.statusNote ? `<div style="font-size:10px;color:var(--text-muted);margin-top:2px">${esc(c.statusNote)}</div>` : ''}
+    </td>
+    <td><button class="btn btn-secondary btn-sm" onclick="openStatusModal('${c.id}')">✏️ Статус</button></td>
+  </tr>`).join('');
+}
+
+// ── STATUS MODAL ─────────────────────────────────────────────
+function openStatusModal(id) {
+  const c = contractsDB.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('smContractId').value = id;
+  document.getElementById('smStatus').value = c.status || 'new';
+  document.getElementById('smNote').value = c.statusNote || '';
+  document.getElementById('statusModal').classList.add('open');
+}
+function closeStatusModal() { document.getElementById('statusModal').classList.remove('open'); }
+
+async function saveContractStatus() {
+  const id     = document.getElementById('smContractId').value;
+  const status = document.getElementById('smStatus').value;
+  const note   = document.getElementById('smNote').value.trim();
+  const idx    = contractsDB.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  contractsDB[idx].status     = status;
+  contractsDB[idx].statusNote = note;
+  contractsDB[idx].statusUpdatedAt = new Date().toISOString();
+  contractsDB[idx].statusUpdatedBy = currentUser?.name || '—';
+  await contractsSave(contractsDB);
+  await writeLog('contract_status',
+    `Договор №${contractsDB[idx].num}: статус изменён на «${status}»${note?' — '+note:''}`);
+  closeStatusModal();
+  renderStats();
+  renderContractsTable();
+}
+
+// ── TASKS ─────────────────────────────────────────────────────
+function openTaskForm()  { document.getElementById('taskAddForm').classList.add('open'); populateAssignSelect('taskAssign'); }
+function closeTaskForm() { document.getElementById('taskAddForm').classList.remove('open'); }
+
+async function saveTask() {
+  const text = document.getElementById('taskText').value.trim();
+  if (!text) { alert('Введите текст задачи'); return; }
+  const assignId = document.getElementById('taskAssign').value;
+  const assignUser = usersDB.find(u => u.id === assignId);
+  tasksDB.push({
+    id:         't_' + Date.now(),
+    text,
+    priority:   document.getElementById('taskPri').value,
+    dueDate:    document.getElementById('taskDue').value || null,
+    done:       false,
+    assignedTo: assignId || currentUser?.id,
+    assignedName: assignUser?.name || currentUser?.name,
+    createdBy:  currentUser?.id,
+    createdName:currentUser?.name,
+    createdAt:  new Date().toISOString()
+  });
+  await tasksSave(tasksDB);
+  await writeLog('task_add', `Задача: «${text}» → ${assignUser?.name||currentUser?.name}`);
+  closeTaskForm();
+  document.getElementById('taskText').value = '';
+  renderTasks();
+}
+
+async function toggleTask(id) {
+  const t = tasksDB.find(x => x.id === id);
+  if (!t) return;
+  t.done = !t.done;
+  t.doneAt = t.done ? new Date().toISOString() : null;
+  await tasksSave(tasksDB);
+  renderTasks();
+}
+
+async function deleteTask(id) {
+  tasksDB = tasksDB.filter(x => x.id !== id);
+  await tasksSave(tasksDB);
+  renderTasks();
+}
+
+function renderTasks() {
+  const list = getFilteredTasks();
+  const open   = list.filter(t => !t.done).sort((a,b) => {
+    const po = {high:0,med:1,low:2};
+    return (po[a.priority]||1) - (po[b.priority]||1);
+  });
+  const done = list.filter(t => t.done);
+  const container = document.getElementById('tasksContainer');
+  if (!container) return;
+
+  if (!list.length) {
+    container.innerHTML = `<div class="dash-empty"><div class="dash-empty-icon">✅</div><p>Нет задач</p></div>`;
+    return;
+  }
+
+  const renderItem = t => `
+    <div class="task-item">
+      <div class="task-check ${t.done?'done':''}" onclick="toggleTask('${t.id}')"></div>
+      <div style="flex:1;min-width:0">
+        <div class="task-text ${t.done?'done':''}">
+          <span class="task-pri ${t.priority||'med'}"></span>${esc(t.text)}
+        </div>
+        <div class="task-meta">
+          ${t.assignedName ? `👤 ${esc(t.assignedName)}` : ''}
+          ${t.dueDate ? ` · 📅 ${new Date(t.dueDate).toLocaleDateString('ru-RU')}` : ''}
+          ${t.done && t.doneAt ? ` · ✓ ${new Date(t.doneAt).toLocaleDateString('ru-RU')}` : ''}
+        </div>
+      </div>
+      ${currentUser?.role==='admin'||t.createdBy===currentUser?.id ?
+        `<button onclick="deleteTask('${t.id}')" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px" title="Удалить">✕</button>` : ''}
+    </div>`;
+
+  container.innerHTML =
+    open.map(renderItem).join('') +
+    (done.length ? `<div style="margin-top:8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Выполнено (${done.length})</div>` + done.slice(0,3).map(renderItem).join('') : '');
+}
+
+// ── CALLS ─────────────────────────────────────────────────────
+function openCallForm()  { document.getElementById('callAddForm').classList.add('open'); populateAssignSelect('callAssign'); }
+function closeCallForm() { document.getElementById('callAddForm').classList.remove('open'); }
+
+async function saveCall() {
+  const company = document.getElementById('callCompany').value.trim();
+  if (!company) { alert('Введите название компании'); return; }
+  const assignId   = document.getElementById('callAssign').value;
+  const assignUser = usersDB.find(u => u.id === assignId);
+  callsDB.push({
+    id:           'cl_' + Date.now(),
+    company,
+    contact:      document.getElementById('callContact').value.trim(),
+    phone:        document.getElementById('callPhone').value.trim(),
+    note:         document.getElementById('callNote').value.trim(),
+    status:       'pending',   // pending | done | skip
+    assignedTo:   assignId || currentUser?.id,
+    assignedName: assignUser?.name || currentUser?.name,
+    createdBy:    currentUser?.id,
+    createdAt:    new Date().toISOString()
+  });
+  await callsSave(callsDB);
+  closeCallForm();
+  ['callCompany','callContact','callPhone','callNote'].forEach(id => document.getElementById(id).value = '');
+  renderCalls();
+}
+
+async function updateCallStatus(id, status) {
+  const c = callsDB.find(x => x.id === id);
+  if (!c) return;
+  c.status = status;
+  c.updatedAt = new Date().toISOString();
+  await callsSave(callsDB);
+  await writeLog('call', `Звонок в «${c.company}»: ${status==='done'?'выполнен':'пропущен'}`);
+  renderCalls();
+}
+
+async function deleteCall(id) {
+  callsDB = callsDB.filter(x => x.id !== id);
+  await callsSave(callsDB);
+  renderCalls();
+}
+
+function renderCalls() {
+  const list = getFilteredCalls();
+  const pending = list.filter(c => c.status === 'pending');
+  const done    = list.filter(c => c.status !== 'pending');
+  const container = document.getElementById('callsContainer');
+  if (!container) return;
+
+  if (!list.length) {
+    container.innerHTML = `<div class="dash-empty"><div class="dash-empty-icon">📞</div><p>Нет запланированных звонков</p></div>`;
+    return;
+  }
+
+  const renderCallItem = c => `
+    <div class="call-item" style="${c.status!=='pending'?'opacity:.6':''}">
+      <div class="call-avatar">${(c.company||'?')[0].toUpperCase()}</div>
+      <div class="call-info">
+        <div class="call-name">${esc(c.company)}</div>
+        <div class="call-phone">${c.phone ? esc(c.phone) : ''} ${c.contact ? '· '+esc(c.contact) : ''}</div>
+        ${c.note ? `<div style="font-size:10.5px;color:var(--text-muted);margin-top:1px">${esc(c.note)}</div>` : ''}
+        ${c.assignedName ? `<div style="font-size:10px;color:var(--text-muted)">👤 ${esc(c.assignedName)}</div>` : ''}
+      </div>
+      <div class="call-status">
+        ${c.status==='pending' ? `
+          <button class="call-btn call-btn-done" onclick="updateCallStatus('${c.id}','done')">✓ Выполнен</button>
+          <button class="call-btn call-btn-skip" onclick="updateCallStatus('${c.id}','skip')">— Пропустить</button>
+        ` : `<span style="font-size:11px;color:var(--text-muted)">${c.status==='done'?'✅ Выполнен':'⏭ Пропущен'}</span>`}
+        ${currentUser?.role==='admin'||c.createdBy===currentUser?.id ?
+          `<button onclick="deleteCall('${c.id}')" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:13px;padding:2px 4px" title="Удалить">✕</button>` : ''}
+      </div>
+    </div>`;
+
+  container.innerHTML = pending.map(renderCallItem).join('') +
+    (done.length ? `<div style="margin-top:8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Завершённые (${done.length})</div>` + done.slice(0,3).map(renderCallItem).join('') : '');
+}
+
+// ── ACTIVITY CHART (canvas) ───────────────────────────────────
+function renderActivityChart() {
+  const canvas = document.getElementById('activityChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.parentElement?.offsetWidth || canvas.offsetWidth || 400;
+  canvas.width = W; canvas.height = 180;
+  ctx.clearRect(0, 0, W, 180);
+
+  // Build last 30 days buckets
+  const days = 30;
+  const buckets = Array.from({length:days}, (_,i) => {
+    const d = new Date(); d.setDate(d.getDate() - (days-1-i));
+    return { label: d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}), contracts: 0, tasks: 0, date: d.toDateString() };
+  });
+
+  getFilteredContracts().forEach(c => {
+    const b = buckets.find(b => new Date(c.createdAt||0).toDateString() === b.date);
+    if (b) b.contracts++;
+  });
+  getFilteredTasks().filter(t=>t.done).forEach(t => {
+    const b = buckets.find(b => new Date(t.doneAt||0).toDateString() === b.date);
+    if (b) b.tasks++;
+  });
+
+  const maxV = Math.max(1, ...buckets.map(b => b.contracts + b.tasks));
+  const padL=10, padR=10, padT=10, padB=30;
+  const bW = (W-padL-padR)/days;
+  const chartH = 180-padT-padB;
+
+  // Draw bars
+  buckets.forEach((b,i) => {
+    const x = padL + i*bW;
+    const cH = (b.contracts/maxV)*chartH;
+    const tH = (b.tasks/maxV)*chartH;
+    // contracts bar
+    if (b.contracts) {
+      ctx.fillStyle = '#2471a3';
+      ctx.beginPath(); ctx.roundRect(x+1, padT+chartH-cH, bW-3, cH, 2); ctx.fill();
+    }
+    // tasks bar (stacked)
+    if (b.tasks) {
+      ctx.fillStyle = '#2d7a4f';
+      ctx.beginPath(); ctx.roundRect(x+1, padT+chartH-cH-tH, bW-3, tH, 2); ctx.fill();
+    }
+    // X-axis label every 5 days
+    if (i%5===0 || i===days-1) {
+      ctx.fillStyle = '#6b6b80'; ctx.font = '9px IBM Plex Mono,monospace'; ctx.textAlign='center';
+      ctx.fillText(b.label, x+bW/2, 180-8);
+    }
+  });
+
+  document.getElementById('activityLegend').innerHTML =
+    '<span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px"><span style="width:10px;height:10px;background:#2471a3;border-radius:2px;display:inline-block"></span>Договоры</span>' +
+    '<span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#2d7a4f;border-radius:2px;display:inline-block"></span>Задачи выполнены</span>';
+}
+
+// ── Helper: populate manager select ──────────────────────────
+async function populateAssignSelect(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  if (!usersDB.length) usersDB = await usersGet();
+  // Managers can only assign to themselves; admins can assign to anyone
+  if (currentUser?.role !== 'admin') {
+    sel.innerHTML = `<option value="${currentUser?.id||''}">${esc(currentUser?.name||'Я')}</option>`;
+    sel.disabled = true;
+    return;
+  }
+  sel.disabled = false;
+  sel.innerHTML = usersDB
+    .filter(u=>u.role==='manager'||u.role==='admin')
+    .map(u=>`<option value="${u.id}" ${u.id===currentUser?.id?'selected':''}>${esc(u.name)}</option>`)
+    .join('');
+}
+
+// ── Auto-save contract to dashboard when docx is generated ───
+async function saveContractToDashboard(num, buyer, amount, date) {
+  contractsDB = await contractsGet();
+  // Avoid duplicates by contract number + manager
+  const exists = contractsDB.find(c => c.num===num && c.managerId===currentUser?.id);
+  if (exists) return;
+  contractsDB.push({
+    id:          'c_' + Date.now() + '_' + Math.random().toString(36).slice(2),
+    num,
+    buyer,
+    amount,
+    date,
+    status:      'new',
+    statusNote:  '',
+    managerId:   currentUser?.id   || '',
+    managerName: currentUser?.name || '',
+    createdAt:   new Date().toISOString()
+  });
+  await contractsSave(contractsDB);
+}
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Auth must complete first so currentUser is set before data loads
+  await initAuth();
+  await Promise.all([loadClientsDB(), loadStock()]);
+
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  const dateEl = document.getElementById('contractDate');
+  if (dateEl) dateEl.value = today;
+
+  // Add initial spec row
+  addRow('', 'шт', 1, 0);
+  updateSidebar();
+
+  // Live sidebar updates
+  ['contractNum','contractDate','buyerName','buyerINN'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updateSidebar);
+  });
+});
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SHARED STORAGE HELPERS
+// ═══════════════════════════════════════════════════════════════
+async function stGet(k){try{return await window.storage.get(k,true);}catch(e){return null;}}
+async function stSet(k,v){try{return await window.storage.set(k,JSON.stringify(v),true);}catch(e){return null;}}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function hilite(text,q){if(!q)return text;return text.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:var(--gold-light);border-radius:2px">$1</mark>');}
+
+// ═══════════════════════════════════════════════════════════════
+//  CLIENT DATABASE
+// ═══════════════════════════════════════════════════════════════
+const TAS_CLIENTS_KEY = 'tas_clients_v1';
+let clientsDB = [];
+let selectedClient = null;
+let currentBuyerTab = 'db';
+
+async function loadClientsDB(){
+  try{const r=await stGet(TAS_CLIENTS_KEY);clientsDB=r&&r.value?JSON.parse(r.value):[];}
+  catch(e){clientsDB=[];}
+  updateDBSidebar();renderDBTable();
+}
+async function saveClientsDB(){await stSet(TAS_CLIENTS_KEY,clientsDB);updateDBSidebar();}
+function updateDBSidebar(){const el=document.getElementById('sidebarDBCount');if(el)el.textContent=clientsDB.length+' клиентов';}
+
+function openDB(){loadClientsDB();document.getElementById('dbOverlay').classList.add('open');}
+function closeDB(){document.getElementById('dbOverlay').classList.remove('open');closeCF();}
+
+function renderDBTable(){
+  const q=(document.getElementById('dbSearchInp')?.value||'').toLowerCase();
+  const list=q?clientsDB.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.inn||'').includes(q)||(c.director||'').toLowerCase().includes(q)):clientsDB;
+  const tbody=document.getElementById('dbTableBody');if(!tbody)return;
+  if(!list.length){tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted)">${clientsDB.length?'Ничего не найдено.':'База пуста.'}</td></tr>`;document.getElementById('dbStatsText').textContent='';return;}
+  tbody.innerHTML=list.map((c,i)=>`<tr>
+    <td style="color:var(--text-muted);font-size:11px">${i+1}</td>
+    <td><div class="td-org">${esc(c.name)}</div><div style="font-size:11px;color:var(--text-muted)">${esc(c.address||'')}</div></td>
+    <td class="td-inn">${esc(c.inn||'—')}</td>
+    <td style="font-size:12.5px">${esc(c.director||'—')}</td>
+    <td style="text-align:center">${c.deals>0?`<span class="deal-badge">${c.deals}</span>`:'—'}</td>
+    <td style="font-size:11px;color:var(--text-muted)">${c.addedAt?new Date(c.addedAt).toLocaleDateString('ru-RU'):'—'}</td>
+    <td><div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="btn btn-gold btn-sm" onclick="dbSelectClient('${c.id}')">✔ Выбрать</button>
+      <button class="btn btn-secondary btn-sm" onclick="dbEditClient('${c.id}')">✏️</button>
+      <button class="btn btn-danger btn-sm" onclick="dbDeleteClient('${c.id}')">🗑</button>
+    </div></td>
+  </tr>`).join('');
+  document.getElementById('dbStatsText').textContent=`Показано: ${list.length} из ${clientsDB.length}`;
+}
+
+function openCF(client){
+  const card=document.getElementById('cfCard');card.classList.add('open');
+  document.getElementById('cfTitle').textContent=client?'✏️ Редактировать':'➕ Добавить нового клиента';
+  document.getElementById('cfEditId').value=client?client.id:'';
+  ['name','director','inn','address','account','bank','mfo','oked','nds','phone'].forEach(f=>document.getElementById('cf_'+f).value=client?(client[f]||''):'');
+  card.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeCF(){document.getElementById('cfCard').classList.remove('open');}
+function dbEditClient(id){const c=clientsDB.find(x=>x.id===id);if(c)openCF(c);}
+
+async function saveCF(){
+  const name=document.getElementById('cf_name').value.trim();
+  const inn=document.getElementById('cf_inn').value.trim();
+  const director=document.getElementById('cf_director').value.trim();
+  if(!name||!inn||!director){alert('Заполните: Наименование, ИНН и Директора');return;}
+  const data={name,director,inn,
+    address:document.getElementById('cf_address').value.trim(),
+    account:document.getElementById('cf_account').value.trim(),
+    bank:document.getElementById('cf_bank').value.trim(),
+    mfo:document.getElementById('cf_mfo').value.trim(),
+    oked:document.getElementById('cf_oked').value.trim(),
+    nds:document.getElementById('cf_nds').value.trim(),
+    phone:document.getElementById('cf_phone').value.trim()};
+  const editId=document.getElementById('cfEditId').value;
+  if(editId){const i=clientsDB.findIndex(c=>c.id===editId);if(i!==-1)clientsDB[i]={...clientsDB[i],...data};}
+  else{data.id='c_'+Date.now()+'_'+Math.random().toString(36).slice(2);data.deals=0;data.addedAt=new Date().toISOString();clientsDB.push(data);}
+  await saveClientsDB();renderDBTable();closeCF();
+}
+
+async function dbDeleteClient(id){
+  if(!confirm('Удалить клиента из общей базы?'))return;
+  clientsDB=clientsDB.filter(c=>c.id!==id);
+  await saveClientsDB();renderDBTable();
+}
+
+function dbSelectClient(id){
+  const c=clientsDB.find(x=>x.id===id);if(!c)return;
+  applyClientToBuyer(c);
+  setBuyerTab('db',document.querySelector('.buyer-tab-btn'));
+  closeDB();
+}
+
+function exportDB(){saveAs(new Blob([JSON.stringify(clientsDB,null,2)],{type:'application/json'}),'TAS_Clients_'+new Date().toISOString().split('T')[0]+'.json');}
+async function importDB(e){
+  const f=e.target.files[0];if(!f)return;
+  try{const imp=JSON.parse(await f.text());if(!Array.isArray(imp)){alert('Неверный формат');return;}let added=0;imp.forEach(c=>{if(!c.id)c.id='c_'+Date.now()+Math.random();if(!clientsDB.find(x=>x.inn===c.inn)){clientsDB.push(c);added++;}});await saveClientsDB();renderDBTable();alert(`Добавлено ${added} новых клиентов (дубликаты по ИНН пропущены).`);}catch(err){alert('Ошибка: '+err.message);}
+  e.target.value='';
+}
+
+// Buyer tab
+function setBuyerTab(tab,btn){
+  currentBuyerTab=tab;
+  document.querySelectorAll('.buyer-tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else document.querySelectorAll('.buyer-tab-btn')[tab==='db'?0:1].classList.add('active');
+  document.querySelectorAll('.buyer-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('bpanel_'+tab).classList.add('active');
+}
+
+// Buyer search dropdown
+function onBuyerSearch(q){
+  const dd=document.getElementById('buyerDropdown');
+  if(!q.trim()){dd.classList.remove('open');return;}
+  const lq=q.toLowerCase();
+  const res=clientsDB.filter(c=>(c.name||'').toLowerCase().includes(lq)||(c.inn||'').includes(lq)||(c.director||'').toLowerCase().includes(lq)).slice(0,8);
+  dd.innerHTML=res.length?res.map(c=>`<div class="cd-item" onclick='applyClientFromDrop(${JSON.stringify(c).replace(/"/g,"&quot;")})'>
+    <div class="cd-name">${hilite(esc(c.name),q)}${c.deals>0?`<span class="cd-deals">${c.deals}x</span>`:''}</div>
+    <div class="cd-meta">ИНН: ${c.inn||'—'} | ${c.director||''}</div>
+  </div>`).join(''):`<div class="cd-empty">Не найдено. <a href="#" onclick="openDB();return false">Добавить →</a></div>`;
+  dd.classList.add('open');
+}
+function openBuyerDropdown(){if(document.getElementById('buyerSearchInput').value.trim())document.getElementById('buyerDropdown').classList.add('open');}
+function closeBuyerDropdown(){document.getElementById('buyerDropdown').classList.remove('open');}
+
+function applyClientFromDrop(c){applyClientToBuyer(c);closeBuyerDropdown();document.getElementById('buyerSearchInput').value=c.name;}
+
+function applyClientToBuyer(c){
+  selectedClient=c;
+  const map={buyerName:'name',buyerDirector:'director',buyerINN:'inn',buyerAddress:'address',buyerAccount:'account',buyerBank:'bank',buyerMFO:'mfo',buyerOKED:'oked',buyerNDS:'nds'};
+  Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.value=c[key]||'';});
+  document.getElementById('buyerHint').style.display='none';
+  const box=document.getElementById('selectedClientCard');
+  box.style.display='block';
+  box.innerHTML=`<button class="btn-clear-sc" onclick="clearBuyerSelection()" title="Снять">✕</button>
+    <h4>✅ ${esc(c.name)}</h4>
+    <div class="sc-grid">
+      <div class="sc-f"><span>Директор</span><span>${esc(c.director||'—')}</span></div>
+      <div class="sc-f"><span>ИНН</span><span>${esc(c.inn||'—')}</span></div>
+      <div class="sc-f"><span>р/с</span><span style="font-size:10.5px">${esc(c.account||'—')}</span></div>
+      <div class="sc-f"><span>Банк / МФО</span><span style="font-size:10.5px">${esc(c.bank||'—')} / ${esc(c.mfo||'—')}</span></div>
+      <div class="sc-f"><span>Адрес</span><span style="font-size:10.5px">${esc(c.address||'—')}</span></div>
+      <div class="sc-f"><span>Сделок</span><span>${c.deals||0} раз</span></div>
+    </div>`;
+  updateSidebar();
+}
+
+function clearBuyerSelection(){
+  selectedClient=null;
+  document.getElementById('buyerSearchInput').value='';
+  document.getElementById('selectedClientCard').style.display='none';
+  document.getElementById('buyerHint').style.display='block';
+  updateSidebar();
+}
+
+function getBuyerData(){
+  if(currentBuyerTab==='db') return selectedClient||null;
+  const name=document.getElementById('buyerName')?.value.trim();
+  if(!name)return null;
+  return {name,director:document.getElementById('buyerDirector')?.value.trim()||'',inn:document.getElementById('buyerINN')?.value.trim()||'',address:document.getElementById('buyerAddress')?.value.trim()||'',account:document.getElementById('buyerAccount')?.value.trim()||'',bank:document.getElementById('buyerBank')?.value.trim()||'',mfo:document.getElementById('buyerMFO')?.value.trim()||'',oked:document.getElementById('buyerOKED')?.value.trim()||'',nds:document.getElementById('buyerNDS')?.value.trim()||''};
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STOCK / WAREHOUSE
+// ═══════════════════════════════════════════════════════════════
+const STOCK_KEY   = 'tas_stock_v1';
+const HISTORY_KEY = 'tas_prod_history_v1';
+let stockList   = [];
+let historyList = [];
+
+async function loadStock(){
+  try{const r=await stGet(STOCK_KEY);stockList=r&&r.value?JSON.parse(r.value):[];}catch(e){stockList=[];}
+  try{const r=await stGet(HISTORY_KEY);historyList=r&&r.value?JSON.parse(r.value):[];}catch(e){historyList=[];}
+  updateStockSidebar();
+}
+async function saveStock(){await stSet(STOCK_KEY,stockList);updateStockSidebar();}
+async function saveHistory(){await stSet(HISTORY_KEY,historyList);}
+function updateStockSidebar(){const el=document.getElementById('sidebarStockCount');if(el)el.textContent=stockList.length+' позиций';}
+
+async function recordProductHistory(rows){
+  rows.forEach(r=>{if(!r.name)return;const ex=historyList.find(h=>h.name.toLowerCase()===r.name.toLowerCase());if(ex){ex.count=(ex.count||0)+1;ex.unit=r.unit||ex.unit;}else historyList.push({name:r.name,unit:r.unit||'шт',count:1});});
+  historyList.sort((a,b)=>(b.count||0)-(a.count||0));
+  if(historyList.length>200)historyList=historyList.slice(0,200);
+  await saveHistory();
+}
+
+function openStock(){loadStock();document.getElementById('stockOverlay').classList.add('open');renderStockTable();}
+function closeStock(){document.getElementById('stockOverlay').classList.remove('open');}
+
+function renderStockTable(){
+  const q=(document.getElementById('stockSearchInp')?.value||'').toLowerCase();
+  const list=q?stockList.filter(s=>s.name.toLowerCase().includes(q)):stockList;
+  const tbody=document.getElementById('stockTableBody');if(!tbody)return;
+  const toolbar=document.getElementById('stockToolbar'),wrap=document.getElementById('stockTableWrap');
+  if(stockList.length===0){if(toolbar)toolbar.style.display='none';if(wrap)wrap.style.display='none';return;}
+  if(toolbar)toolbar.style.display='flex';if(wrap)wrap.style.display='block';
+  document.getElementById('stockCountText').textContent=`Позиций на складе: ${stockList.length}`;
+  if(!list.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:16px;color:var(--text-muted)">Ничего не найдено</td></tr>';return;}
+  tbody.innerHTML=list.map((s,i)=>`<tr>
+    <td style="color:var(--text-muted);font-size:11px">${i+1}</td>
+    <td><div class="stock-item-name">${esc(s.name)}</div></td>
+    <td><span class="stock-qty-badge">${s.qty}</span></td>
+    <td class="stock-unit">${esc(s.unit||'шт')}</td>
+    <td><button class="btn btn-gold btn-sm" onclick='addRowFromStock(${i})'>＋ В договор</button></td>
+  </tr>`).join('');
+}
+
+function addRowFromStock(idx){
+  const item = stockList[idx];
+  if (!item) return;
+  addRow(item.name, item.unit||'шт', 1, 0);
+  setTimeout(()=>{const q=document.getElementById('rQty_'+rowCount);if(q)q.focus();},50);
+  closeStock();
+}
+function clearStock(){if(!confirm('Очистить список товаров на складе?'))return;stockList=[];saveStock();renderStockTable();document.getElementById('stockLoadStatus').style.display='none';document.getElementById('stockToolbar').style.display='none';document.getElementById('stockTableWrap').style.display='none';}
+
+function handleStockDrop(e){e.preventDefault();document.getElementById('stockDropZone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)processStockFile(f);}
+function handleStockFile(e){const f=e.target.files[0];if(f)processStockFile(f);e.target.value='';}
+
+async function processStockFile(file){
+  const status=document.getElementById('stockLoadStatus');
+  status.style.display='block';status.textContent='⏳ Обработка файла...';status.style.color='var(--text-muted)';
+  try{
+    const ext=file.name.split('.').pop().toLowerCase();
+    let items=[];
+    if(ext==='csv'){items=parseCSV(await file.text());}
+    else if(ext==='xlsx'||ext==='xls'){items=await parseExcel(file);}
+    else throw new Error('Используйте .xlsx, .xls или .csv');
+    if(!items.length)throw new Error('Файл пустой или не удалось распознать данные');
+    stockList=items;await saveStock();renderStockTable();
+    status.textContent=`✅ Загружено ${items.length} позиций`;status.style.color='var(--success)';
+  }catch(err){status.textContent='❌ Ошибка: '+err.message;status.style.color='var(--error)';}
+}
+
+function parseCSV(text){
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());if(lines.length<2)return[];
+  const delim=lines[0].includes(';')?';':',';
+  const headers=lines[0].split(delim).map(h=>h.trim().toLowerCase().replace(/['"]/g,''));
+  const nameIdx=headers.findIndex(h=>h.includes('наименование')||h.includes('товар')||h.includes('номенклатура')||h.includes('name'));
+  const qtyIdx=headers.findIndex(h=>h.includes('количество')||h.includes('остаток')||h.includes('qty')||h.includes('кол'));
+  const unitIdx=headers.findIndex(h=>h.includes('единица')||h.includes('ед')||h.includes('unit'));
+  if(nameIdx===-1)throw new Error('Не найдена колонка "Наименование". Проверьте заголовки файла.');
+  const items=[];
+  for(let i=1;i<lines.length;i++){const cols=lines[i].split(delim).map(c=>c.trim().replace(/^["']|["']$/g,''));const name=cols[nameIdx];if(!name)continue;items.push({name,qty:qtyIdx!==-1?(parseFloat(cols[qtyIdx])||0):0,unit:unitIdx!==-1?(cols[unitIdx]||'шт'):'шт'});}
+  return items;
+}
+
+async function parseExcel(file){
+  if(!window.XLSX){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+  const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});if(rows.length<2)return[];
+  const headers=rows[0].map(h=>String(h).trim().toLowerCase());
+  const nameIdx=headers.findIndex(h=>h.includes('наименование')||h.includes('товар')||h.includes('номенклатура')||h.includes('name'));
+  const qtyIdx=headers.findIndex(h=>h.includes('количество')||h.includes('остаток')||h.includes('qty')||h.includes('кол'));
+  const unitIdx=headers.findIndex(h=>h.includes('единица')||h.includes('ед.')||h.includes('unit'));
+  if(nameIdx===-1)throw new Error('Не найдена колонка "Наименование". Проверьте заголовки файла 1С.');
+  const items=[];
+  for(let i=1;i<rows.length;i++){const row=rows[i];const name=String(row[nameIdx]||'').trim();if(!name)continue;items.push({name,qty:qtyIdx!==-1?(parseFloat(row[qtyIdx])||0):0,unit:unitIdx!==-1?(String(row[unitIdx]||'шт').trim()):'шт'});}
+  return items;
+}
+
+// Product autocomplete in spec rows
+function getHistorySuggestions(q){const lq=q.toLowerCase();return historyList.filter(h=>!q||h.name.toLowerCase().includes(lq)).slice(0,5);}
+function getStockSuggestions(q){const lq=q.toLowerCase();return stockList.filter(s=>!q||s.name.toLowerCase().includes(lq)).slice(0,5);}
+
+function onProductInput(r, q) {
+  const dd   = document.getElementById('prodDrop_'+r);
+  const ghost = document.getElementById('prodGhost_'+r);
+  const hint  = document.getElementById('prodGhostHint_'+r);
+  if (!dd) return;
+
+  // ── Stock items → dropdown list ────────────────────────────
+  const stockHits = getStockSuggestions(q);
+  if (stockHits.length) {
+    dd.innerHTML = stockHits.map(s =>
+      `<div class="prod-item" onclick="selectProduct(${r},${JSON.stringify(s.name)},${JSON.stringify(s.unit||'шт')})">
+        <div class="prod-item-name">${hilite(esc(s.name),q)}<span class="prod-in-stock">✅ В наличии: ${s.qty} ${esc(s.unit||'шт')}</span></div>
+      </div>`
+    ).join('');
+    dd.classList.add('open');
+  } else {
+    dd.classList.remove('open');
+  }
+
+  // ── History items → ghost hint inside the field ────────────
+  // Only show when NO stock match AND field has text
+  const histHits = !stockHits.length && q.trim()
+    ? getHistorySuggestions(q).slice(0, 1)   // best single match
+    : [];
+
+  if (histHits.length && ghost) {
+    const suggestion = histHits[0].name;
+    // Show ghost only if suggestion starts with what was typed (case-insensitive)
+    if (suggestion.toLowerCase().startsWith(q.toLowerCase()) && suggestion.length > q.length) {
+      // Ghost = typed part (transparent) + remaining chars (faded)
+      const remaining = suggestion.slice(q.length);
+      ghost.innerHTML = `<span style="color:transparent">${esc(q)}</span><span style="color:#c0c0c0">${esc(remaining)}</span>`;
+      ghost.style.display = 'block';
+      if (hint) { hint.textContent = `Подсказка из истории отгрузок (Tab — выбрать)`; hint.style.display = 'block'; }
+    } else {
+      // Contains match but doesn't start with it — show hint below
+      if (ghost) ghost.style.display = 'none';
+      if (hint) { hint.textContent = `Из истории: «${histHits[0].name}»`; hint.style.display = 'block'; }
+    }
+    // Store suggestion for Tab key
+    const inp = document.getElementById('rName_'+r);
+    if (inp) inp.dataset.ghostSuggestion = histHits[0].name;
+  } else {
+    if (ghost) ghost.style.display = 'none';
+    if (hint)  hint.style.display  = 'none';
+    const inp = document.getElementById('rName_'+r);
+    if (inp) delete inp.dataset.ghostSuggestion;
+  }
+}
+
+function onProductFocus(r) {
+  const inp = document.getElementById('rName_'+r);
+  if (inp) onProductInput(r, inp.value);
+}
+
+// Tab key accepts ghost suggestion
+function onProductKeydown(e, r) {
+  if (e.key === 'Tab') {
+    const inp = document.getElementById('rName_'+r);
+    if (inp && inp.dataset.ghostSuggestion) {
+      e.preventDefault();
+      inp.value = inp.dataset.ghostSuggestion;
+      const unitHist = historyList.find(h => h.name === inp.dataset.ghostSuggestion);
+      const unitSel  = document.getElementById('rUnit_'+r);
+      if (unitHist && unitSel) unitSel.value = unitHist.unit || 'шт';
+      delete inp.dataset.ghostSuggestion;
+      const ghost = document.getElementById('prodGhost_'+r);
+      const hint  = document.getElementById('prodGhostHint_'+r);
+      if (ghost) ghost.style.display = 'none';
+      if (hint)  hint.style.display  = 'none';
+      document.getElementById('prodDrop_'+r)?.classList.remove('open');
+      setTimeout(() => { document.getElementById('rQty_'+r)?.focus(); }, 30);
+      updateSidebar();
+    }
+  } else if (e.key === 'Escape') {
+    document.getElementById('prodDrop_'+r)?.classList.remove('open');
+  }
+}
+function selectProduct(r,name,unit){
+  const inp=document.getElementById('rName_'+r);if(inp)inp.value=name;
+  const unitSel=document.getElementById('rUnit_'+r);if(unitSel)unitSel.value=unit;
+  const dd=document.getElementById('prodDrop_'+r);if(dd)dd.classList.remove('open');
+  setTimeout(()=>{const q=document.getElementById('rQty_'+r);if(q)q.focus();},30);
+  updateSidebar();
+}
+
+</script>
+</body>
+</html>
