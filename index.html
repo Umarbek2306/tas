@@ -2457,7 +2457,7 @@ async function ensureDefaultAdmin() {
   usersDB = await usersGet();
   if (usersDB.length === 0) {
     // Create default admin: login=admin, password=Leasing1506
-    const hash = await sha256('Leasing1506');
+    const hash = await sha256('1506');
     usersDB = [{
       id:       'u_default_admin',
       name:     'Администратор',
