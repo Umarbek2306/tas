@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2456,8 +2457,8 @@ async function writeLog(action, details = '') {
 async function ensureDefaultAdmin() {
   usersDB = await usersGet();
   if (usersDB.length === 0) {
-    // Create default admin: login=admin, password=Leasing1506
-    const hash = await sha256('1506');
+    // Create default admin: login=admin, password=admin1506
+    const hash = await sha256('admin156');
     usersDB = [{
       id:       'u_default_admin',
       name:     'Администратор',
