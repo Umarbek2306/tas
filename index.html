@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2423,16 +2422,15 @@ async function logsSave(d)   { await stSet(LOGS_KEY, d); }
 // ── Session (personal=false so it's per-browser) ─────────────
 async function sessionGet() {
   try {
-    // personal storage (shared=false)
-    const r = await window.storage.get(SESSION_KEY, false);
-    return r && r.value ? JSON.parse(r.value) : null;
+    const v = sessionStorage.getItem(SESSION_KEY);
+    return v ? JSON.parse(v) : null;
   } catch(e) { return null; }
 }
 async function sessionSave(data) {
-  try { await window.storage.set(SESSION_KEY, JSON.stringify(data), false); } catch(e) {}
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); } catch(e) {}
 }
 async function sessionClear() {
-  try { await window.storage.delete(SESSION_KEY, false); } catch(e) {}
+  try { sessionStorage.removeItem(SESSION_KEY); } catch(e) {}
 }
 
 // ── Logging ───────────────────────────────────────────────────
@@ -2457,8 +2455,8 @@ async function writeLog(action, details = '') {
 async function ensureDefaultAdmin() {
   usersDB = await usersGet();
   if (usersDB.length === 0) {
-    // Create default admin: login=admin, password=admin1506
-    const hash = await sha256('admin156');
+    // Create default admin: login=admin, password=admin123
+    const hash = await sha256('admin123');
     usersDB = [{
       id:       'u_default_admin',
       name:     'Администратор',
@@ -3189,8 +3187,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ═══════════════════════════════════════════════════════════════
 //  SHARED STORAGE HELPERS
 // ═══════════════════════════════════════════════════════════════
-async function stGet(k){try{return await window.storage.get(k,true);}catch(e){return null;}}
-async function stSet(k,v){try{return await window.storage.set(k,JSON.stringify(v),true);}catch(e){return null;}}
+async function stGet(k){try{const v=localStorage.getItem(k);return v?{value:v}:null;}catch(e){return null;}}
+async function stSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return {value:v};}catch(e){return null;}}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function hilite(text,q){if(!q)return text;return text.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:var(--gold-light);border-radius:2px">$1</mark>');}
 
